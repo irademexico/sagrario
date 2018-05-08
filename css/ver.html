@@ -1,0 +1,21 @@
+<html> 
+<body> 
+  
+<?php 
+$link = mysql_connect("localhost", ""); 
+mysql_select_db("solicitudes"); 
+$result = mysql_query("SELECT numSolicitud, padre"); 
+if ($row = mysql_fetch_array($result)){ 
+   echo "<table border = '1'> \n"; 
+   echo "<tr><td>Nombre</td><td>E-Mail</td></tr> \n"; 
+   do { 
+      echo "<tr><td>".$row["numSolicitud"]."</td><td>".$row["nombre"]."</td></tr> \n"; 
+   } while ($row = mysql_fetch_array($result)); 
+   echo "</table> \n"; 
+} else { 
+echo "¡ No se ha encontrado ningún registro !"; 
+} 
+?> 
+  
+</body> 
+</html>

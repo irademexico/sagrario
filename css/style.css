@@ -1,0 +1,145 @@
+body{
+	text-align: center;
+	color: #1c541d;
+	background: #dfcf9f;
+	padding-top: 90px;
+}
+section{
+	padding-top: 5px;
+	background: #a4d279;
+	border-radius: 10px;
+	margin-top: 25px;
+}
+
+article{
+	padding-top: 5px;
+	text-align: center;
+}
+header{
+	text-align: center;
+	width: 100%;
+	background: #e0d0a3;
+	top: 0;
+	position: fixed;
+	height: 90px;
+	font-size: 1em;
+}
+aside{
+	background: #859933;
+}
+
+form{
+	padding-top: 5px;
+}
+footer{
+
+    width:100%;
+    position: fixed;
+    bottom: 0;
+    height: 20px;
+    background: #dfcf9f;
+}
+.entrada{
+	font-size: 1.3em;
+	text-align: right;
+}
+.entradatx{
+	font-size: 1.3em;
+	text-align: left;
+}
+.headMain{
+
+}
+.bautismo{
+	background: #e0d0a3;
+}
+.articien{
+	margin-top: 10px;
+	padding-top: 5px;
+	width: 100%;
+	height:30px;
+	background: #ffff00;
+}
+.artileft{
+	width: 30%;
+	float: left;
+	position: absolute;
+	height: 180px;
+	margin-top: 15px;
+}
+.articenter{
+	float: center;
+	position: absolute;
+	margin-left: 35%;
+	width: 30%;
+	height: 180px;
+	margin-top: 15px;
+}
+.artiright{
+	float: right;
+	position: absolute;
+	margin-left: 70%;
+	width: 30%;
+	height: 180px;
+	margin-top: 15px;
+}
+
+.confirma2{
+	margin-top: 300px;
+}
+.arriba{
+	position: absolute;
+}
+
+.menuventa ul {
+
+   list-style: none;
+    float:left;
+    border: 1px dashed;
+    padding: 2%;
+    width:95%;
+	display: flex;
+
+/*  background-color: #00CCCC;
+  border: 1px solid #0000FF;
+  margin: 0px;
+  padding: 2px;
+  line-height:0px;
+  width:14em; /* Es necesario aportar anchura al menú para limitar el ancho de los botones */
+}
+
+.menuventa li {
+
+	background: #ff812d;
+    padding:5px;
+    border-radius: 15%;
+
+	text-align: center;
+	flex-grow: 1;
+	 /* De este modo los elementos del menú se mostrán como bloques uno debajo de otro y hasta el ancho del menú */
+  /*margin: 2px;
+  padding: 0;
+  list-style: none;*/
+}
+
+.menuventa ul li a{
+	display: block;
+	   color: #FFFFFF;
+    text-decoration:none;
+/*  display: block;
+  background-color: #99CCCC;
+  border: 1px solid #0000FF;
+  margin: 0;
+  text-decoration: none;
+  color: #000;
+  font-family: Verdana,Arial,Helvetica;
+  font-size: 12px;
+  font-weight:bold;
+  padding: 15px;/* Cuanto mayor sea el espaciado, mas grande será el area del botón. */
+}
+/*
+#menuSM li a:hover {
+  background-color: #003399;
+  border-color: #FFF;
+  color: #FFCC00;
+}/*
