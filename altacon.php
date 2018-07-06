@@ -1,5 +1,5 @@
-<?php 
-		
+<?php
+		$actualizar=$_POST['actualizar'];
 		$clave=$_POST['clave'];
 		$solicitud=$_POST['solicitud'];
 		$libro=$_POST['libro'];
@@ -27,6 +27,7 @@
 		$xdiacon=$_POST['xdiacon'];
 		$xmescon=$_POST['xmescon'];
 		$xanocon=$_POST['xanocon'];
+		echo "sol:".$solicitud;
 ?>
 
 <!DOCTYPE html>
@@ -36,28 +37,33 @@
     <!-- Always force latest IE rendering engine or request Chrome Frame -->
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title></title>
+	<title>Archivo</title>
     <meta name="description" content="Archivo Sagrario Metropolitano" />
     <meta name="keywords" content="sagrario, metropolitano" />
     <link href="css/normalize.css" rel="stylesheet" type="text/css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="img/favicon.png" rel="icon" type="image/png" />
+    <link href="img/favicon.ico" rel="icon" type="image/png" />
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-	<header style="font-size: 1em; height: 35px;">
-		<p style="font-size: 1.3em;height: 15px;">SAGRARIO METROPOLITANO</p>
+	<header >
+		SAGRARIO METROPOLITANO<br>
 		Sistema Archivo
-	</header>
-	<section style="font-size: 1em">
-		<form name="form" method="POST" action=''>
-			<input  type="submit" name="baja" onclick="enviab('baja.php')" value="Baja de USB"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="busca" onclick="enviab('busca.php')" value="Busca"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="imprime" onclick="enviab('print.php')" value="Imprime"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input type="text" name="clave">
-		</form>
-	</section>
 
+		<form name="form" method="POST" action='busca.php'>
+			<input class="submitTop" type="button" name="inicio" onclick="enviab('index.php')" value="Inicio"   >
+			<input  class="submitTop"  type="button" name="archivo" onclick="enviab('archivo.php')" value="Archivo"  >
+
+			||<input class="entradaMenu"  type="text" name="clave" placeholder="Clave L-F-A">
+			<input  class="submitTop"  type="submit" name="busca" onclick="enviab('busca.php')" value="Buscar"  >||
+			<input class="submitTop"   type="button" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  >
+			<input class="submitTop"   type="button" name="buscara" onclick="enviab('buscara.php')" value="Busqueda"   >
+			<input class="submitTop"   type="button" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib.bautismo"   >
+		</form>
+	</header>
+	<section>
+
+	</section>
 	<?php
 		$meses = array('enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre');
 
@@ -71,11 +77,11 @@
 		$solic='solic_local';
 		$base="confirma";
 
+		if ($actualizar==0) {
+			$sql = "INSERT INTO confirma (clave, solicitud, libro, librobis, foja, fojac, acta, reg, actaab, fechaconf, ministro, nombre, paterno, materno, hijoa, padre, madre, padrino, fechanac, lugarnac, fechabau, parrbau, lugarbau, librobau, xdiacon, xmescon, xanocon ) VALUES ('".$clave."', '".$solicitud."', '".$libro."', '".$librobis."', '".$foja."', '".$fojac."', '".$acta."', '".$reg."', '".$actaab."', '".$fechasacr."', '".$ministro."', '".$nombre."', '".$paterno."', '".$materno."', '".$hijoa."', '".$padre."', '".$madre."', '".$padrino."', '".$fechanac."', '".$lugarnac."', '".$fechabau."', '".$parrbau."', '".$lugarbau."', '".$librobau."', '".$xdiacon."', '".$xmescon."', '".$xanocon."')";
 
-		$sql = "INSERT INTO confirma (clave, solicitud, libro, librobis, foja, fojac, acta, reg, actaab, fechaconf, ministro, nombre, paterno, materno, hijoa, padre, madre, padrino, fechanac, lugarnac, fechabau, parrbau, lugarbau, librobau, xdiacon, xmescon, xanocon ) VALUES ('".$clave."', '".$solicitud."', '".$libro."', '".$librobis."', '".$foja."', '".$fojac."', '".$acta."', '".$reg."', '".$actaab."', '".$fechasacr."', '".$ministro."', '".$nombre."', '".$paterno."', '".$materno."', '".$hijoa."', '".$padre."', '".$madre."', '".$padrino."', '".$fechanac."', '".$lugarnac."', '".$fechabau."', '".$parrbau."', '".$lugarbau."', '".$librobau."', '".$xdiacon."', '".$xmescon."', '".$xanocon."')";
-
-		$agrega = mysqli_query($con, $sql) or die( "no agrega") ;
-
+			$agrega = mysqli_query($con, $sql) or die( "no agrega") ;
+		}
 
 
 		$sql = "SELECT * FROM $base WHERE clave = '".$clave."'";
@@ -107,13 +113,13 @@
 		$xmescon=$registro['xmescon'];
 		$xanocon=$registro['xanocon'];
 	?>
-	
+
 	<form action="imp_con.php" method="POST">
 
 		<table>
 			<tr>
 				<td>Solicitud: </td>
-				<td> <?php echo "<input type='number' name='solicitud' maxlength='7' width='5' size='5' value='".$solicitud."' >" ?> </td>
+				<td> <?php echo "<input type='number' name='solicitud' maxlength='7' width='5' size='5' step='.01'	 value='".$solicitud."' >" ?> </td>
 				<td>Libro: </td>
 				<td><?php echo "<input type='number' name='libro' maxlength='4' size='4' value='".$libro."' >" ?></td>
 				<td><?php echo "<input type='text' name='librobis'	maxlength='2' size='2' value='".$librobis."' >" ?></td>
@@ -131,9 +137,10 @@
 		<table style="background: #ccff66;">
 			<tr>
 				<td>Fecha de Sacramento:</td>
-				<td><?php echo "<input type='date' data-date-format='dd/mmmm/aaaa'   name='fecsacr'  size='10' value='".$fecsacr."' >"?></td>
+				<td><?php echo "<input type='date' data-date-format='dd/mmmm/aaaa'   name='fecsacr'  size='10' value='".$fechasacr."' >"?></td>
 				<td>Ministro: </td>
 			 	<td><?php echo "<input type='text' name='ministro' maxlength='30' size='70' value='".$registro['ministro']."' '>" ?></td>
+				<td><label><input type="checkbox" name="imprApellidos" checked> Imprimir Apellidos</label></td>
 			</tr>
 		</table>
 
@@ -147,7 +154,7 @@
 		</table>
 
 		<table style="background: #ccff66;">
-			<tr> 
+			<tr>
 				<td>Hij:</td>
 				<td><?php echo "<input type='text' name='hijo-a'  maxlength='1' size='1' value='".$registro['hijoa']."' >" ?></td>
 				<td> de: <?php echo "<input type='text' name='padre' maxlength='30' size='30' value='".$registro['padre']."' >" ?></td>
@@ -181,17 +188,21 @@
 				<td><?php echo "<input type='text' name='lugarbau' maxlength='50' placeholder='entidad-colonia...' size='50' value=".$registro['lugarbau'].">"; ?></td>
 			</tr>
 		</table>
-		
+
 		<?php echo "<input type='hidden' name='clave' value='".$clave."'>"; ?>
 
 		<input type='submit' name='' value='IMPRIMIR'>
 	</form>
 
 	<SCRIPT LANGUAGE="JavaScript">
-		function enviab(pag){ 
-			document.form.action= pag 
-			document.form.submit() 
-		} 
-	</script>	
+		function enviab(pag){
+			document.form.action= pag
+			document.form.submit()
+		}
+	</script>
+  <footer>
+    Derechos Reservados - José Ignacio Virgilio Ruiz Arroyo
+  </footer>
+
 </body>
 </html>

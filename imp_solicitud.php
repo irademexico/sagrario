@@ -89,12 +89,14 @@ function PutLink($URL, $txt)
     $this->SetTextColor(0);
 }
 }
+
 $meses = array('enero','febrero','marzo','abril','mayo','junio','julio',
                'agosto','septiembre','octubre','noviembre','diciembre');
 
 
 
 $solicitud = $_POST["solicitud"];
+//echo $solicitud;
 if (empty($_POST["simple"])) {
 	$simple=1;
 }
@@ -114,12 +116,33 @@ $hoy = date('Y-m-d');
 $nombre = $_POST["nombre"];
 $apPaterno  = $_POST["apPaterno"];
 $apMaterno  = $_POST["apMaterno"];
-$esposo  = $_POST["esposo"];
-$esposa  = $_POST["esposa"];
-$padre  = $_POST["padre"];
-$madre = $_POST["madre"];
-$padrino = $_POST["padrino"];
-$madrina = $_POST["madrina"];
+$vacia= trim($nombre).trim($apPaterno).trim($apMaterno);
+
+
+if ($solicitud == 1) {
+    $madrina = $_POST["madrina"];
+}else{
+    $madrina = "";
+}
+if ($solicitud == 3) {
+    $esposo  = $_POST["esposo"];
+    $esposa  = $_POST["esposa"];
+    $vacia = $vacia.trim($esposo).trim($esposa);
+}else{
+    $esposo ="";
+    $esposa ="";
+}
+if (!($solicitud == 3)) {
+    $padre  = $_POST["padre"];
+    $madre = $_POST["madre"];
+    $padrino = $_POST["padrino"];
+}else{
+    $padre = "";
+    $madre = "";
+    $padrino = "";
+}
+
+
 $fecSacro = $_POST["fecSacr"];
 $fecSacr = date($fecSacro);
 $padres = $padre." y ".$madre;
@@ -227,13 +250,13 @@ $con->close();
 
 
 if ($simple == 1){
-    $txSimple = "simple";
+    $txSimple = " Simple";
 }
 else{
-    $txSimple =  "Certificada";
+    $txSimple =  " Certificada";
 }
 if ($urgente==2) {
-    $txUrgente = "Urgente";
+    $txUrgente = " Urgente";
 }
 else{
     $txUrgente = " ";
@@ -247,7 +270,10 @@ else{
     $txPara = " se solicita para otros  - ";
     $txdatosMat = "";
 }
-
+if (empty($vacia)) {
+  header('Location: cap_solicitudes.php');
+}
+//echo "<br>".$solicitud;
 if ($solicitud=='1'){
 // ******************************************************************
 $pdf = new PDF();
@@ -809,7 +835,8 @@ if ($con->connect_errno){
     echo "conexion erronea";
     exit();
 }
-echo $hoy;
+//echo $hoy;
+
 if ($busca==1) {
 
     $base='solicitudes';

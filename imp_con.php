@@ -1,7 +1,10 @@
-﻿<?php 
+﻿<?php
+header("Content-type: text/html;charset=utf-8");
+header("mime-content-type: text/html;charset=utf-8");
+header("mime_content-type: text/html;charset=utf-8");
 date_default_timezone_set('America/Mexico_City');
 
-// Imprimir 
+// Imprimir
 require('fpdf.php');
 
 class PDF extends FPDF
@@ -96,6 +99,7 @@ $meses = array('ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
                'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
 $solicitud = $_POST["solicitud"];
 
+
     $clave=$_POST['clave'];
 
 
@@ -105,9 +109,14 @@ if ($con->connect_errno){
     echo "conexion erronea";
     exit();
 }
+
 $clave="'".$clave."'";
 $base= "confirma";
 $solic="solic_local";
+
+$actualiza="UPDATE  $base SET solicitud='$solicitud' WHERE clave=$clave";
+$result = mysqli_query($con, $actualiza);
+
 
     $acta=$_POST['acta'];
     if (! empty($acta)) {
@@ -204,7 +213,7 @@ $solic="solic_local";
     if (! empty($parrbau)) {
         $actualiza="UPDATE  $base SET parrbau='$parrbau' WHERE clave=$clave";
         $result = mysqli_query($con, $actualiza);
-    }    
+    }
     $paterno  =($_POST["paterno"]);
     if (! empty($paterno)) {
         $actualiza="UPDATE  $base SET paterno='$paterno' WHERE clave=$clave";
@@ -234,7 +243,7 @@ $solic="solic_local";
 $sql = "SELECT * FROM $base WHERE clave = $clave";
 $result = mysqli_query($con, $sql);
 $reg_con=mysqli_fetch_assoc($result);
-            
+
     $diacon=substr($reg_con['fechaconf'], 8, 2);
     $mescon=substr($reg_con['fechaconf'], 5, 2);
     @$txmescon=$meses[$mescon-1];
@@ -275,7 +284,7 @@ $oa=$reg_con['hijoa'];
 $parrbau=utf8_encode($reg_con['parrbau']);
 $lugarbau=utf8_encode($reg_con['lugarbau']);
 $parlug1=trim(substr(trim($parrbau)." - ".trim($lugarbau),0,45));
-$parlug2=trim(substr(trim($parrbau)." - ".trim($lugarbau),46,90));
+$parlug2=trim(substr(trim($parrbau)." - ".trim($lugarbau),45,90));
 //$parrbau=$reg_con['parrbau'];
 
 //$madrina=$reg_con['madrina'];
@@ -301,8 +310,21 @@ if ($reg==0) {
 $txlib=$libron." ".$librobis;
 $txfoja=$foja." ".$fojac;
 $txpart=$partidan." ".$partidaab.$reg;
-$nomaps=utf8_decode($nombre)." ".utf8_decode($paterno)." ".utf8_decode($materno);
 
+$padre=utf8_decode($padre);
+$madre=utf8_decode($madre);
+$padrino=utf8_decode($padrino);
+$parrbau=utf8_decode($parrbau);
+$lugarbau=utf8_decode($lugarbau);
+
+
+@$prnape=$_POST['imprApellidos'];
+
+if ($prnape) {
+    $nomaps=utf8_decode($nombre)." ".utf8_decode($paterno)." ".utf8_decode($materno);
+}else{
+  $nomaps=utf8_decode($nombre);
+}
 
 $pdf = new PDF();
 // Primera página
@@ -395,4 +417,4 @@ $pdf->Write(1, 'M.I.SR. CANGO. ERNESTO REYNOSO Y VALLE');
 $pdf->Output();
 
 
-?>"
+?>

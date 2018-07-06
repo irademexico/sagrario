@@ -1,39 +1,66 @@
-<?php 
+<?php
 	$solini=$_POST['solini'];
 	$solfin=$_POST['solfin'];
 	$fecsolini=$_POST['fecsolini'];
 	$fecsolfin=$_POST['fecsolfin'];
-	echo $fecsolfin.$fecsolini;
+	$nombre=$_POST['nombre'];
+	$paterno=$_POST['paterno'];
+	$materno=$_POST['materno'];
+	$fecsolfin.$fecsolini;
 
 	$con= new mysqli("localhost", "root", "", "sagrario");
 	if ($con->connect_errno){
 	    echo "conexion erronea";
 	    exit();
 	}
-	
-	$base='solicitudes';
+
+	$base='solic_local';
 
 	if ($solini>0) {
 		if ($solfin>0) {
-			$sql="SELECT  * FROM $base WHERE numSolicitud >= $solini AND numSolicitud <= $solfin";	
-			# code... busca numsolini hasta numsolfin
+			$sql="SELECT  * FROM $base WHERE numSolicitud >= $solini AND numSolicitud <= $solfin ORDER BY numSolicitud DESC";
 		}else{
 			$sql="SELECT  * FROM $base WHERE numSolicitud = $solini";
-			# code... busca numsolin
 		}
 	} else {
-		if (empty($fecsolfin)) {
-			$sql="SELECT  * FROM $base WHERE fecaSolicitud = '$fecsolini'";
+		echo "nompatmat...";
+		if (!empty($fecsolini)) {
+			$sql="SELECT  * FROM $base WHERE fecaSolicitud = '$fecsolini' ORDER BY numSolicitud DESC";
 		}else{
-			$sql="SELECT  * FROM $base WHERE fecaSolicitud BETWEEN '$fecsolini' AND '$fecsolfin'";
-			# busca fecsolini hasta fecsolfin
+
+			$sql="SELECT  * FROM $base WHERE fecaSolicitud BETWEEN '$fecsolini' AND '$fecsolfin' ORDER BY numSolicitud DESC";		
+			if (!empty($paterno)) {
+				
+				if (!empty($materno)) {
+					if (!empty($nombre)) {
+						$sql="SELECT * FROM $base WHERE apPaterno='$paterno' AND apMaterno='$materno' AND nombre like '$nombre' ORDER BY nombre ASC";
+						echo "nompatmat";
+					}else {
+						$sql="SELECT * FROM $base WHERE apPaterno='$paterno' AND apMaterno='$materno' ORDER BY nombre ASC ";
+					}
+				}else{
+					if (!empty($nombre)) {
+						$sql="SELECT * FROM $base WHERE apPaterno='$paterno' AND nombre like '$nombre' ORDER BY nombre ASC";
+					}else {
+						$sql="SELECT * FROM $base WHERE apPaterno='$paterno'  ORDER BY nombre ASC";
+					}
+				}
+			}else{
+				
+				if(!empty($nombre)){
+					$sql="SELECT * FROM $base WHERE nombre='$nombre' ORDER BY nombre ASC";
+				}else{
+					if (!empty($materno)) {
+						$sql="SELECT * FROM $base WHERE apMaterno='$materno' ORDER BY nombre ASC";
+					}
+				}
+			}
 		}
 	}
-
-	$result = mysqli_query($con, $sql) or die(error_log('no encontro Solicitudes'));
+	$result = mysqli_query($con, $sql) ;
 	$regs=mysqli_num_rows(mysqli_query($con, $sql));
-
 	
+
  ?>
 <!DOCTYPE html>
 <html>
@@ -53,38 +80,37 @@
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-    <link href="img/favicon.png" rel="icon" type="image/png" />
+    <link href="img/favicon.ico" rel="icon" type="image/png" />
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>  <CENTER>
-    <header style="font-size: 1em; height: 35px;">
-        <p style="font-size: 1.3em;height: 15px;">SAGRARIO METROPOLITANO</p>
-        Sistema Archivo
-    </header>
-    </CENTER>
-	<section style="font-size: 1em">
+	<header >
+		SAGRARIO METROPOLITANO<br>
+		Sistema Archivo
+
 		<form name="form" method="POST" action='busca.php'>
-			<input  type="submit" name="home" onclick="enviab('index.php')" value="Inicio"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			
-			Clave L.F.A.<input type="text" name="clave">
-			<input  type="submit" name="busca" onclick="enviab('busca.php')" value="Busca Acta"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="buscara" onclick="enviab('buscara.php')" value="Busqueda avanzada"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib. bautismo"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
+			<input class="submitTop" type="button" name="inicio" onclick="enviab('index.php')" value="Inicio"   >
+			<input  class="submitTop"  type="button" name="archivo" onclick="enviab('archivo.php')" value="Archivo"  >
+
+			||<input class="entradaMenu"  type="text" name="clave" placeholder="Clave L-F-A">
+			<input  class="submitTop"  type="submit" name="busca" onclick="enviab('busca.php')" value="Buscar"  >||
+			<input class="submitTop"   type="button" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  >
+			<input class="submitTop"   type="button" name="buscara" onclick="enviab('buscara.php')" value="Busqueda"   >
+			<input class="submitTop"   type="button" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib.bautismo"   >
 		</form>
-	</section>
+	</header>
 
 <article><h1>Solicitudes Procesadas</h1></article>
 
 <?php
 
-	echo "<table border = '1' style='color:#0000cc; width= 80%;'> \n"; 
-  	echo "<tr><td style='width: 7%;'>Solicitud</td><td style='width: 22%;'>Nombre</td><td style='width: 22%;'> Padres </td><td style='width: 22%;'>Padrinos</td><td style='width: 10%;'>Fec.Solicitud</td><td style='width: 10%; '>Solicitud de</td> <td style='width: 8%;'> Status </td></tr>"; 
+	echo "<table border = '1' style='color:#0000cc; width= 80%;'> \n";
+  	echo "<tr><td style='width: 7%;'>Solicitud</td><td style='width: 22%;'>Nombre</td><td style='width: 22%;'> Padres </td><td style='width: 22%;'>Padrinos</td><td style='width: 10%;'>Fec.Solicitud</td><td style='width: 10%; '>Solicitud de</td> <td style='width: 8%;'> Status </td></tr>";
 
-    while ($consulta= mysqli_fetch_array($result)) 
+    while ($consulta= mysqli_fetch_array($result))
 {
- 
+
   if ($consulta['solicitud']== 1) {
         $solic = "Bautismo";
         $baseBusca= "bautismo";
@@ -100,19 +126,27 @@
   $anofn=substr($consulta['fecaSolicitud'],0,4);
   $mesfn=substr($consulta['fecaSolicitud'],5,2);
   $diafn=substr($consulta['fecaSolicitud'],8,2);
+	$status=$consulta['status'];
+	if ($status==1) {
+		$status="en proceso";
+	}elseif ($status==2) {
+		$status="no se encontro";
+	}elseif ($status==4) {
+		$status="impresa";
+	}
+	$sol=$consulta['numSolicitud'];
+  echo "<tr ><td  style='width: 7%;'>".$consulta['numSolicitud']."</td> <td  style='width: 22%;'>".$consulta['nombre']." ".$consulta['apPaterno']." ".$consulta['apMaterno']." ".$consulta['esposo']." - ".$consulta['esposa'].    "</td><td  style='width: 22%;'>".$consulta['padre']." - ".$consulta['madre'];
+	echo "</td> <td  style='width: 22%;'>".$consulta['padrino']." - ".$consulta['madrina']."</td> <td  style='width: 10%;'>".$diafn."/".$mesfn."/".$anofn."</td> <td style='width: 10%; '>".$solic."</td> <td style='width: 8%;'>".$status."</td><td><a href='restaurasol.php?numsol=".$sol."'><button>Restaura</button></a><td></tr> ";
 
-  echo "<tr ><td  style='width: 7%;'>".$consulta['numSolicitud']."</td> <td  style='width: 22%;'>".$consulta['nombre']." ".$consulta['apPaterno']." ".$consulta['apMaterno']." ".$consulta['esposo']." - ".$consulta['esposa'].    "</td><td  style='width: 22%;'>".$consulta['padre']." - ".$consulta['madre']."</td> <td  style='width: 22%;'>".$consulta['padrino']." - ".$consulta['madrina']."</td> <td  style='width: 10%;'>".$diafn."/".$mesfn."/".$anofn."</td> <td style='width: 10%; '>".$solic."</td> <td style='width: 8%;'>".$consulta['status']."</td> 
-     </tr> ";
-  
 }
 
 ?>
 
     <SCRIPT LANGUAGE="JavaScript">
-    function enviab(pag){ 
-        document.form.action= pag 
-        document.form.submit() 
-    } 
+    function enviab(pag){
+        document.form.action= pag
+        document.form.submit()
+    }
     </script>
     <footer>
         Derechos Reservados - José Ignacio Virgilio Ruiz Arroyo

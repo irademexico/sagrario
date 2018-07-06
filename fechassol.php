@@ -10,7 +10,7 @@
     <meta name="keywords" content="sagrario, metropolitano" />
     <link href="css/normalize.css" rel="stylesheet" type="text/css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="img/favicon.png" rel="icon" type="image/png" />
+    <link href="img/favicon.ico" rel="icon" type="image/png" />
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>

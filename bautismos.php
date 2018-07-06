@@ -11,22 +11,25 @@
     <meta name="keywords" content="sagrario, metropolitano" />
     <link href="css/normalize.css" rel="stylesheet" type="text/css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="img/favicon.png" rel="icon" type="image/png" />
+    <link href="img/favicon.ico" rel="icon" type="image/png" />
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-	<header style="font-size: 1em; height: 35px;">
-		<p style="font-size: 1.3em;height: 15px;">SAGRARIO METROPOLITANO</p>
+	<header >
+		SAGRARIO METROPOLITANO<br>
 		Sistema Archivo
-	</header>
-	<section style="font-size: 1em">
-		<form name="form" method="POST" action=''>
-			<input type="text" name="clave">
-			<input  type="submit" name="busca" onclick="enviab('busca.php')" value="Busca"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="imprime" onclick="enviab('print.php')" value="Imprime"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="baja" onclick="enviab('baja.php')" value="Baja de USB"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
+	
+		<form name="form" method="POST" action='busca.php'>
+			<input class="submitTop" type="button" name="inicio" onclick="enviab('index.php')" value="Inicio"   >
+			<input  class="submitTop"  type="button" name="archivo" onclick="enviab('archivo.php')" value="Archivo"  >
+			
+			||<input class="entradaMenu"  type="text" name="clave" placeholder="Clave L-F-A">
+			<input  class="submitTop"  type="submit" name="busca" onclick="enviab('busca.php')" value="Buscar"  >||
+			<input class="submitTop"   type="button" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  >
+			<input class="submitTop"   type="button" name="buscara" onclick="enviab('buscara.php')" value="Busqueda"   >
+			<input class="submitTop"   type="button" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib.bautismo"   >
 		</form>
-	</section>
+	</header>
 <?php
 
 $con=new mysqli("localhost", "root", "", "sagrario");

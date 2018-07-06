@@ -1,57 +1,3 @@
-<?php
-$cve=$_POST['cve'];
-$nom=$_POST['nom'];
-$pat=$_POST['pat'];
-$mat=$_POST['mat'];
-$fec=$_POST['fec'];
-$hij=$_POST['hij'];
-$pad=$_POST['pad'];
-$mad=$_POST['mad'];
-$fecSac=$_POST['fecSac'];
-$con= new mysqli("localhost", "root", "", "sagrario");
-		if ($con->connect_errno){
-    		echo "conexion erronea";
-    		exit();
-		}
-		
-		$base="bautismo";
-		$sql="UPDATE  $base SET nombre='$nom', paterno='$pat', materno='$mat', fechanac='$fec', hijoa='$hij', padre='$pad', madre='$mad'  WHERE clave=$cve";
-		$result = mysqli_query($con, $sql);
-
-
-echo $fecSac;
-$libro=$_POST['libro'];
-
-$librobis=$_POST['librobis'];
-if (empty($librobis)) {
-	$librobis="";
-}
-
-$foja=$_POST['foja'];
-
-$fojac=$_POST['fojac'];
-if (empty($fojac)) {
-	$fojac="";
-}
-
-$partidan=$_POST['partidan'];
-$partidaab=$_POST['partidaab'];
-
-$partidan=$partidan+1;
-
-if (empty($partidaab)) {
-	$partidaab="";
-
-}elseif ($partidaab=="A") {
-	$partidaab="B";
-	$partidan=$partidan-1;
-}else{
-	$partidaab="A";
-	$foja=$foja+1;
-}
-
-
- ?>
 <!DOCTYPE html>
 <html >
 <head>
@@ -71,11 +17,11 @@ if (empty($partidaab)) {
 	<header >
 		SAGRARIO METROPOLITANO<br>
 		Sistema Archivo
-	
+
 		<form name="form" method="POST" action='busca.php'>
 			<input class="submitTop" type="button" name="inicio" onclick="enviab('index.php')" value="Inicio"   >
 			<input  class="submitTop"  type="button" name="archivo" onclick="enviab('archivo.php')" value="Archivo"  >
-			
+
 			||<input class="entradaMenu"  type="text" name="clave" placeholder="Clave L-F-A">
 			<input  class="submitTop"  type="submit" name="busca" onclick="enviab('busca.php')" value="Buscar"  >||
 			<input class="submitTop"   type="button" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  >
@@ -83,20 +29,24 @@ if (empty($partidaab)) {
 			<input class="submitTop"   type="button" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib.bautismo"   >
 		</form>
 	</header>
-	<section>
-	<form action="caplibbau.php" method="POST">
+<section>
+	<form action="caplibbau.php" method="POST" name="f1">
 	<table>
 	<tr>
-		<input type="hidden" name="fecSacr" value="<? echo $fecSac;?>">
 		<td>Libro: </td>
-		<td><input class="entrada" type="text" name="libro" maxlength="4" size="4" value="<?php echo $libro;?>"></td>
-		<td><input class="entrada" type="text" name="librobis" maxlength="4" size="4" placeholder="L/N/LN" value="<?php echo $librobis;?>"></td>
-		<td>Foja: </td>
-		<td><input class="entrada" type="text" name="foja" maxlength="5" size="5" value="<?php echo $foja;?>"></td>
+		<td><input type="text" name="libro" maxlength="4" size="4" pattern="[0-9]" required /></td>
+		<td><input type="text" name="librobis" maxlength="4" size="4" placeholder="L/N/LN"></td>
+
+		<TD>Foja: </TD>
+		<td><input type="text" name="foja" maxlength="5" size="5" required /></td>
+
 		<td>Acta: </td>
-		<td><input class="entrada" type='text' name='partidan' maxlength='4' size='4' value="<?php echo $partidan;?>"></td>
-		<td><input class="entrada" type='text' name='partidaab' maxlength='1' size='1' placeholder='A/B' value="<?php echo $partidaab?>"></td>
-		<td><input type="submit" name="" value="Continuar"></td>
+		<td><input type='text' name='partidan' maxlength='4' size='4' required /></td>
+		<td><input list="valores" name="partidaab" maxlength='1' size='1' placeholder='A/B' pattern="[A-B]{1}"></td>
+
+		<datalist id="valores"> <option value=""> <option value="A"> <option value="B"></datalist>
+		<td><input type="button" name="continua" value="Continuar" onclick="comprobarFoja()"></td>
+		<td ><input  type="button" name="libro" onclick="enviab('libro.php')" value="Actas en Libro"  ></td>
 	</tr>
 
 </table>
@@ -111,6 +61,31 @@ if (empty($partidaab)) {
 		document.form.action= pag
 		document.form.submit()
 	}
+	function comprobarFoja(){
+		clave3 = document.f1.partidaab.value;
+    clave1 = document.f1.foja.value;
+		clave2 = document.f1.partidan.value;
+		clave4 = document.f1.libro.value;
+
+		if (clave3 == "A" || clave3 == "B"){
+	    if (clave1 != clave2 )
+	       alert("La Foja y el Acta son distintas O VACIAS...\nRealizaríamos las acciones del caso negativo");
+			else {
+				document.f1.submit();
+			}
+		}
+		else{
+			document.f1.submit();
+		}
+	}
+
 	</script>
+
+
+  <footer>
+    Derechos Reservados - José Ignacio Virgilio Ruiz Arroyo
+  </footer>
+
+
 </body>
 </html>

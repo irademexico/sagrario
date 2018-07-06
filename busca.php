@@ -5,7 +5,7 @@ $clave=$_POST['clave'];
 <!DOCTYPE html>
 <html >
 <head>
-	
+
     <!-- Always force latest IE rendering engine or request Chrome Frame -->
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,28 +14,28 @@ $clave=$_POST['clave'];
     <meta name="keywords" content="sagrario, metropolitano" />
     <link href="css/normalize.css" rel="stylesheet" type="text/css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="img/favicon.png" rel="icon" type="image/png" />
+    <link href="img/favicon.ico" rel="icon" type="image/png" />
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <meta http-equiv="Content-Type" content="text/html" charset="iso-8859-1"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
-	<header style="font-size: 1em; height: 35px;">
-		<p style="font-size: 1.3em;height: 15px;">SAGRARIO METROPOLITANO</p>
+	<header >
+		SAGRARIO METROPOLITANO<br>
 		Sistema Archivo
-	</header>
-	<section style="font-size: 1em">
+	
 		<form name="form" method="POST" action='busca.php'>
-			<input  type="submit" name="home" onclick="enviab('index.php')" value="Inicio"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
+			<input class="submitTop" type="button" name="inicio" onclick="enviab('index.php')" value="Inicio"   >
+			<input  class="submitTop"  type="button" name="archivo" onclick="enviab('archivo.php')" value="Archivo"  >
 			
-			Clave L.F.A.<input type="text" name="clave">
-			<input  type="submit" name="busca" onclick="enviab('busca.php')" value="Busca Acta"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="buscara" onclick="enviab('buscara.php')" value="Busqueda avanzada"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib. bautismo"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
+			||<input class="entradaMenu"  type="text" name="clave" placeholder="Clave L-F-A">
+			<input  class="submitTop"  type="submit" name="busca" onclick="enviab('busca.php')" value="Buscar"  >||
+			<input class="submitTop"   type="button" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  >
+			<input class="submitTop"   type="button" name="buscara" onclick="enviab('buscara.php')" value="Busqueda"   >
+			<input class="submitTop"   type="button" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib.bautismo"   >
 		</form>
-	</section>
-	<?php 
+	</header>
+	<?php
 		$meses = array('ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
                'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
 
@@ -51,8 +51,8 @@ $clave=$_POST['clave'];
 			case 'c':
 				$base="confirma";
 				break;
-			case 'M':
-				$base="matrimonio";
+			case 'm':
+				$base="matrimonios";
 				break;
 			default:
 				$base="bautismo";
@@ -65,41 +65,46 @@ $clave=$_POST['clave'];
 		//echo $regs." registros de ".$base;
 		$registro=mysqli_fetch_assoc($result);
 
+
+
 		if ($clave1=='c') {
 			$fecsacr=$registro['fechaconf'];
+		}elseif($clave1=='m'){
+			$fecsacr=$registro['fecSacr'];
 		}else{
 			$fecsacr=$registro['fechasacr'];
 		}
-		
-				
-		echo $fecsacr;
+
 		$diasacr=substr($fecsacr, 8, 2);
 		$messacr=substr($fecsacr, 5, 2);
 		@ $txmessacr=$meses[$messacr-1];
 		$anosacr=substr($fecsacr, 0, 4);
-		$fecsacr=$diasacr." de ".$txmessacr." de ".$anosacr;
+		$fecsacrtx=$diasacr." de ".$txmessacr." de ".$anosacr;
 
 		if ($base=='confirma') {
 			$diabau=substr($registro['fechabau'], 8, 2);
 			$mesbau=substr($registro['fechabau'], 5, 2);
 			@ $txmesbau=$meses[$mesbau-1];
 			$anobau=substr($registro['fechabau'], 0, 4);
-			$fecbau=$diabau." de ".$txmesbau." de ".$anobau;	
-				
+			$fecbau=$diabau." de ".$txmesbau." de ".$anobau;
+
 		$xdiacon=$registro['xdiacon'];
 		$xmescon=$registro['xmescon'];
 		$xanocon=$registro['xanocon'];
 		}
+		if (!$base=="matrimonio"){
+			$dianac=substr($registro['fechanac'], 8, 2);
+			$mesnac=substr($registro['fechanac'], 5, 2);
+			@ $txmesnac=$meses[$mesnac-1];
+			$anonac=substr($registro['fechanac'], 0, 4);
+			$fechanac=$dianac." de ".$txmesnac." de ".$anonac;
 
-		$dianac=substr($registro['fechanac'], 8, 2);
-		$mesnac=substr($registro['fechanac'], 5, 2);
-		@ $txmesnac=$meses[$mesnac-1];
-		$anonac=substr($registro['fechanac'], 0, 4);
-		$fechanac=$dianac." de ".$txmesnac." de ".$anonac;
-
-		$solicitud=$registro['solicitud'];
+			$solicitud=$registro['solicitud'];
+		}else{
+			$solicitud=$registro['solicitud'];
+		}
 //		echo $solicitud;
-		
+
 		if ($base=="bautismo") {
 			if ($registro['legitimo']== "L") {
 				$legitimo="legitimo";
@@ -122,17 +127,32 @@ $clave=$_POST['clave'];
 				$anociv=substr($registro['fecregciv'], 0, 4);
 				$fecregciv=$diaciv."/".$mesciv."/".$anociv;
 			}
+
 			if (!empty($solicitud)) {
 				$sql = "SELECT * FROM notas_marg WHERE solicitud = $solicitud";
-				$resultnm = mysqli_query($con, $sql) ;
+				$resultnm = mysqli_query($con, $sql);
+				$sql = "SELECT * FROM notas WHERE numSolicitud = $solicitud";
+				$resultnp = mysqli_query($con, $sql);
+
 				if ($resultnm) {
 					$reg_sol=mysqli_fetch_assoc($resultnm);
 					$txnotamar=$reg_sol['txnotamar'];
 				}else{
 					$txnotamar="";
 				}
+				if ($resultnp) {
+					$reg_sol=mysqli_fetch_assoc($resultnp);
+					$txnotapie=$reg_sol['notaPie'];
+				}else{
+					$txnotapie="Valida para tramitar matrimonio en la Parroquia de ";
+				}
+
+
+
+
 			}else{
 				$txnotamar="";
+				$txnotapie="Valida para tramitar matrimonio en la Parroquia de ";
 			}
 		}
 		switch ($base) {
@@ -149,41 +169,54 @@ $clave=$_POST['clave'];
 				$imprime='imp_no.php';
 				break;
 		}
-		echo $base;
+
+
 	?>
-	
+
 	<form action="<?php echo $imprime ?>" method="POST">
 	<table>
 	<tr>
+		
 		<input type="hidden" name="clave" value="<?php echo $clave ?>">
-		<td>Solicitud: <strong><?php echo $registro['solicitud']	?></strong></td>
-		<td><input type="number" name="solicitud" maxlength="7" width="5" size="5" step=".01"></td>
-		<td>Libro: <strong><?php echo $registro['libro']?></strong></td>
-		<td><input type="number" name="libro" maxlength="4" size="4"></td>
-		<td><strong><?php echo " - ".$registro['librobis']." "?></strong></td>
-		<td><input type="text" name="librobis"	maxlength="2" size="2" placeholder="L/N/LN"></td>
-		<td>Foja:<strong><?php echo " ".$registro['foja']?></strong></td>
-		<td><input type="number" name="foja" maxlength="4" size="4"></td>
-		<td><strong><?php echo " ".$registro['fojac']." "?></strong></td>
-		<td><input type="text" name="fojac" maxlength="3" size="4" placeholder="FTE/VTA"></td>
+    <input type="hidden" name="solicitud" value="<?php echo $registro['solicitud'] ?>">
+    <input type="hidden" name="libro" value="<?php echo $registro['libro'] ?>">
+    <input type="hidden" name="librobis" value="<?php echo $registro['librobis'] ?>">
+    <input type="hidden" name="foja" value="<?php echo $registro['foja'] ?>">
+    <input type="hidden" name="fojac" value="<?php echo $registro['fojac'] ?>">
+    <input type="hidden" name="acta" value="<?php echo @$registro['acta'] ?>">
+    <input type="hidden" name="actaab" value="<?php echo @$registro['actaab'] ?>">
+    <input type="hidden" name="reg" value="<?php echo @$registro['reg'] ?>">
+    <input type="hidden" name="partidan" value="<?php echo @$registro['partidan'] ?>">
+    <input type="hidden" name="partidaab" value="<?php echo @$registro['partidaab'] ?>">
 
-		<td>Acta: <strong> 
+		<td >Numero de Solicitud: </td> <td  style='font-size:1.3em;'><strong><?php echo $registro['solicitud']	?></strong></td>
+
+		<td>Libro: </td> <td  style='font-size:1.3em;'><strong><?php echo $registro['libro']?></strong></td>
+
+		<td><strong><?php echo " - ".$registro['librobis']." "?></strong></td>
+
+		<td>Foja: </td> <td  style='font-size:1.3em;'><strong><?php echo " ".$registro['foja']?></strong></td>
+
+		<td><strong><?php echo " ".$registro['fojac']." "?></strong></td>
+
+
+		<td>Acta: </td>
 		<?php
 			switch ($base) {
 				case 'bautismo':
-					echo " ".@$registro['partidan']." ".@$registro['partidaab']." "."</strong></td><td><input type='number' name='partidan' maxlength='4' size='4'></td>
-					<td><input type='text' name='partidaab' maxlength='1' size='1' placeholder='A/B'></td>";
+					echo "<td style='font-size:1.3em;'> <strong>".@$registro['partidan']." ".@$registro['partidaab']." "."</strong></td>";
 					break;
 				case 'confirma':
-					echo " ".@$registro['acta']." ".@$registro['actaab']."  R.".@$registro['reg']." "."</strong></td>
-					<td><input type='number' name='acta' maxlength='4' size='4'></td>
-					<td><input type='text' name='actaab' maxlength='1' size='1' placeholder='A/B'></td>
-					<td><input type='number' name='reg' maxlength='2' size='1' placeholder='reg'></td>";
+					echo "<td style='font-size:1.3em;'> <strong> ".@$registro['acta']."  ".@$registro['actaab'];
+          if (@$registro['reg']==0) {
+            echo "</strong></td>";
+          }
+            echo "   Reg.  ".@$registro['reg']."</strong></td>";
 					break;
 				case 'matrimonio':
-					echo " ".@$registro['acta']." "."</strong></td><td><input type='number' name='acta' maxlength='4' size='4'></td>";
+					echo "<td style='font-size:1.3em;'> <strong> ".@$registro['acta']." "."</strong></td>";
 					break;
-				
+
 				default:
 					echo "no pudo leerse el acta";
 					break;
@@ -194,63 +227,77 @@ $clave=$_POST['clave'];
 		</table>
 		<table style="background: #ccff66;">
 			<tr>
-			<td>Fecha de Sacramento:<br><strong> <?php echo "	".$fecsacr." "?></strong></td>
-			<td><input type="date" data-date-format="dd/mmmm/aaaa"   name="fecsacr"  size="10"></td>
-			<td>Ministro: <br><strong><?php echo $registro['ministro'] ?> </strong></td>
-		 	<td><input type="text" name="ministro" maxlength="30" size="70"></td>
+				<td>Numero de solicitud: </td>
+				<td><input type="number" name="numSolicitud" step=".01" value="<?php echo $registro['solicitud']?>"></td>
+			<td>Fecha de Sacramento:
+			<td><input class="entrada" type="date" data-date-format="dd/mmmm/aaaa"   name="fecsacr"  size="10" value="<?php echo $fecsacr; ?>"></td>
+			<td>Ministro: </td>
+		 	<td><input class="entradatx" type="text" name="ministro" maxlength="50" size="70" value="<?php echo $registro['ministro'] ?>"></td>
 			</tr>
 		</table>
 	<table width="180" border="0">
 			<tr>
-				<td>Nombre:</td><?php echo "<td><strong>".$registro['nombre']."</td><td><strong>".$registro['paterno']."</td><td><strong>".$registro['materno']."</td></strong>" ?>
-				<td><input type="text" name="nombre" maxlength="30" size="30"></td>
-				<td><input type="text" name="paterno" maxlength="30" size="30"></td>
-				<td><input type="text" name="materno" maxlength="30" size="30"></td>
+				<td>Nombre:</td>
+				<td><input class="entradatx"  type="text" name="nombre" maxlength="30" size="30" value="<?php echo $registro['nombre'];?>"></td>
+				<td><input class="entradatx"  type="text" name="paterno" maxlength="30" size="30" value="<?php echo $registro['paterno'];?>"></td>
+				<td><input  class="entradatx" type="text" name="materno" maxlength="30" size="30" value="<?php echo $registro['materno'];?>"></td>
 			</tr>
 		</table>
 <table style="background: #ccff66;">
-		<tr> <td>Hij:<?php echo "<strong>".$registro['hijoa']."</strong>" ?> </td>
-			<td><input type="text" name="hijo-a"  maxlength="1" size="1" placeholder="O/A"></td>
-			<td>de: <?php echo "<strong>"." ".$registro['padre']?> <td><input type="text" name="padre" maxlength="50" size="40"></td><td><?php echo "<strong> y de ".$registro['madre']." </strong>"?></td>
-			<td><input type="text" name="madre" maxlength="50" size="40"></td>
+		<tr> <td>Hij: </td>
+			<td><input class="entradatx" type="text" name="hijo-a"  maxlength="1" size="1" placeholder="O/A" value="<?php echo $registro['hijoa'];?>"></td>
+			<td>de:</td><td>
+			<input  class="entradatx" type="text" name="padre" maxlength="50" size="40" value="<?php echo $registro['padre'];?>"></td>
+			<td> y de </td>
+			<td><input  class="entradatx" type="text" name="madre" maxlength="50" size="40" value="<?php echo $registro['madre'];?>"></td>
 		</tr>
 		</table>
 <table>
 	<tr>
-		<td>Padrino(s): <?php echo "<strong> ".$registro['padrino']."</strong>"?></td>
-		<td><input type="text" name="padrino" maxlength="50" size="50"></td>
+		<td>Padrino(s): </td>
+		<td><input  class="entradatx" type="text" name="padrino" maxlength="50" size="50" value="<?php echo $registro['padrino'];?>">
 
-		<?php 
+		<?php
 		if ($base=="bautismo") {
-			echo "<strong> ".@$registro['madrina']."</strong> </td>	<td><input type='text' name='madrina' maxlength=´50' size='50'></td>";
+			echo "<br><input  class='entradatx' type='text' name='madrina' maxlength=´50' size='50' value='".$registro['madrina']."'></td>";
 		}
 		?>
 </table>
 <table style="background: #ccff66;">
 	<tr>
-		<td>Nacio el: <?php echo "<strong> ".$fechanac."</strong>"?></td>
-		<td><input type="date" name="fechanac" size="10"></td>
-		<td>en:<?php echo "<strong> ".$registro['lugarnac']."</strong>"?></td>
-		<td><input type="text" name="lugarnac" placeholder='entidad-colonia...' size="50"></td></tr>
+		<td>Nacio el: </td>
+<td><input class="entrada" type="date" name="fechanac" size="10" value="<?php echo $registro['fechanac']?>"></td>
+		<td>en: </td>
+		<td><input class="entradatx" type="text" name="lugarnac" placeholder='entidad-colonia...' size="50" value="<?php echo $registro['lugarnac'];?>"></td></tr>
 </table>
 <table>
-<?php 
+<?php
 	if ($base=='confirma') {
-		echo "<tr><td>Bautizado el<strong> ".$fecbau.$xdiacon."+".$xmescon."+".$xanocon." </strong></td>
-		<td><input type='date' name='fechabau' size='10'>
-			<input type='text' name='xdiacon' size='2'>
-			<input type='text' name='xmescon' size='5'>
-			<input type='text' name='xanocon' size='2'>
-		</td>
+		echo "<tr><td>Bautizado el </td>
+							<td>
+								<input class='entrada' type='date' name='fechabau' size='10' value='".$registro['fechabau']."'><br>
+								<input class='entrada' type='text' name='xdiacon' size='2' value='".$registro['xdiacon']."'>
+								<input class='entrada' type='text' name='xmescon' size='5' value='".$registro['xmescon']."'>
+								<input class='entrada' type='text' name='xanocon' size='2' value='".$registro['xanocon']."'>
+							</td>
 
-		<td>en: <strong> ".$registro['parrbau']."</strong><input type='text' name='parrbau' size='50' placeholder='parroquia'></td><td>de: <strong> ".$registro['lugarbau']."</strong><input type='text' name='lugarbau' placeholder='entidad-colonia...' size='50'></td></tr>";
+							<td>en: </td>
+							<td>
+								<input class='entradatx' type='text' name='parrbau' size='50' placeholder='parroquia' value='".$registro['parrbau']."'></td>
+							</tr><tr>
+              <td>.</td><td>.</td><td>de: </td>
+							<td>	<input class='entradatx' type='text' name='lugarbau' placeholder='entidad-colonia...' size='50' value='".$registro['lugarbau']."'>
+							</td>
+					</tr>";
 	}
 ?>
 </table>
 <table><tr>
 <?php
 	if ($base=='bautismo') {
-		echo "<td>Nota marginal:</td><td><strong>"." ".$registro['notamar']."</td><td><input type='number' name='notamar' size='1'  maxlenght='1'></td><td><textarea rows='4' cols='50' name='txnotamar'>".$txnotamar."</textarea></td>"."	<td>Nota al pie:</td><td><textarea rows='4' cols='50' name='notapie'>Valida para tramitar matrimonio en la Parroquia de </textarea></td></tr></table>";
+		echo "<td>Nota marginal: </td>
+		<td><input class='entrada' type='text' name='notamar' size='1'  maxlenght='1' value='".$registro['notamar']."'></td>
+		<td><textarea class='entradatx' rows='4' cols='50' name='txnotamar'>".$txnotamar."</textarea></td>"."	<td>Nota al pie:</td><td><textarea class='entradatx' rows='4' cols='50' name='notapie'>".$txnotapie." </textarea></td></tr></table>";
 	}
 echo $base;
 ?>
@@ -259,11 +306,11 @@ echo $base;
 	</form>
 
 	<SCRIPT LANGUAGE="JavaScript">
-	function enviab(pag){ 
-		document.form.action= pag 
-		document.form.submit() 
-	} 
-	</script>	
+	function enviab(pag){
+		document.form.action= pag
+		document.form.submit()
+	}
+	</script>
 	<footer>
 		Derechos Reservados - José Ignacio Virgilio Ruiz Arroyo
 	</footer>

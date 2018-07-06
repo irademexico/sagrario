@@ -5,30 +5,30 @@
     <!-- Always force latest IE rendering engine or request Chrome Frame -->
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title></title>
+	<title>Archivo</title>
     <meta name="description" content="Archivo Sagrario Metropolitano" />
     <meta name="keywords" content="sagrario, metropolitano" />
     <link href="css/normalize.css" rel="stylesheet" type="text/css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="img/favicon.png" rel="icon" type="image/png" />
+    <link href="img/favicon.ico" rel="icon" type="image/png" />
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-	<header style="font-size: 1em; height: 35px;">
-		<p style="font-size: 1.3em;height: 15px;">SAGRARIO METROPOLITANO</p>
+	<header >
+		SAGRARIO METROPOLITANO<br>
 		Sistema Archivo
-	</header>
-	<section style="font-size: 1em">
+	
 		<form name="form" method="POST" action='busca.php'>
-			<input  type="submit" name="home" onclick="enviab('archivo.php')" value="Inicio"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
+			<input class="submitTop" type="button" name="inicio" onclick="enviab('index.php')" value="Inicio"   >
+			<input  class="submitTop"  type="button" name="archivo" onclick="enviab('archivo.php')" value="Archivo"  >
 			
-			Clave L.F.A.<input type="text" name="clave">
-			<input  type="submit" name="busca" onclick="enviab('busca.php')" value="Busca Acta"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="buscara" onclick="enviab('buscara.php')" value="Busqueda avanzada"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib. bautismo"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
+			||<input class="entradaMenu"  type="text" name="clave" placeholder="Clave L-F-A">
+			<input  class="submitTop"  type="submit" name="busca" onclick="enviab('busca.php')" value="Buscar"  >||
+			<input class="submitTop"   type="button" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  >
+			<input class="submitTop"   type="button" name="buscara" onclick="enviab('buscara.php')" value="Busqueda"   >
+			<input class="submitTop"   type="button" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib.bautismo"   >
 		</form>
-	</section>
+	</header>
 			<?php 
 			$clave=" ";
 			if(isset($_POST['baja'])){
@@ -78,10 +78,8 @@
 		document.form.submit() 
 	} 
 	</script>	
-<!-- <input type="text" name="legNat"	maxlength="100"  style=" word-wrap: break-word; word-break: break-all; height: 100px;"> -->
 	<footer>
 		Derechos Reservados - José Ignacio Virgilio Ruiz Arroyo
 	</footer>
-
 </body>
 </html>

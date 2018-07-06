@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 $solicitud=$_POST['solicitud'];
 $libro=$_POST['libro'];
 $librobis=$_POST['librobis'];
@@ -8,27 +9,28 @@ $partidan=$_POST['partidan'];
 $partidaab=$_POST['partidaab'];
 $clave=$_POST['clave'];
 $fecsacr=$_POST['fecsacr'];
-$ministro=$_POST['ministro'];
-$nombre=$_POST['nombre'];
-$paterno=$_POST['paterno'];
-$materno=$_POST['materno'];
+$ministro=utf8_decode($_POST['ministro']);
+$nombre=utf8_decode($_POST['nombre']);
+$paterno=utf8_decode($_POST['paterno']);
+$materno=utf8_decode($_POST['materno']);
 $hijoa=$_POST['hijo-a'];
-$padre=$_POST['padre'];
-$madre=$_POST['madre'];
-$padrino=$_POST['padrino'];
-$madrina=$_POST['madrina'];
+$padre=utf8_decode($_POST['padre']);
+$madre=utf8_decode($_POST['madre']);
+$padrino=utf8_decode($_POST['padrino']);
+$madrina=utf8_decode($_POST['madrina']);
 $fechanac=$_POST['fechanac'];
-$lugarnac=$_POST['lugarnac'];
+$lugarnac=utf8_decode($_POST['lugarnac']);
 $notamar=$_POST['notamar'];
-$txnotamar=$_POST['txnotamar'];
-$notapie=$_POST['notapie'];
+$txnotamar=utf8_decode($_POST['txnotamar']);
+$notapie=utf8_decode($_POST['notapie']);
+$alta=True;
 
 ?>
 
 <!DOCTYPE html>
 <html >
 <head>
-	
+
     <!-- Always force latest IE rendering engine or request Chrome Frame -->
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -42,38 +44,40 @@ $notapie=$_POST['notapie'];
     <meta charset="utf-8">
 </head>
 <body>
-	<header style="font-size: 1em; height: 35px;">
-		<p style="font-size: 1.3em;height: 15px;">SAGRARIO METROPOLITANO</p>
+	<header >
+		SAGRARIO METROPOLITANO<br>
 		Sistema Archivo
-	</header>
-	
-	<section style="font-size: 1em">
+
 		<form name="form" method="POST" action='busca.php'>
-			<input  type="submit" name="home" onclick="enviab('archivo.php')" value="Inicio"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			
-			Clave L.F.A.<input type="text" name="clave">
-			<input  type="submit" name="busca" onclick="enviab('busca.php')" value="Busca Acta"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="buscara" onclick="enviab('buscara.php')" value="Busqueda avanzada"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib. bautismo"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
+			<input class="submitTop" type="button" name="inicio" onclick="enviab('index.php')" value="Inicio"   >
+			<input  class="submitTop"  type="button" name="archivo" onclick="enviab('archivo.php')" value="Archivo"  >
+
+			||<input class="entradaMenu"  type="text" name="clave" placeholder="Clave L-F-A">
+			<input  class="submitTop"  type="submit" name="busca" onclick="enviab('busca.php')" value="Buscar"  >||
+			<input class="submitTop"   type="button" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  >
+			<input class="submitTop"   type="button" name="buscara" onclick="enviab('buscara.php')" value="Busqueda"   >
+			<input class="submitTop"   type="button" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib.bautismo"   >
 		</form>
-	</section>
+	</header>
 	<?php
-		$meses = array('enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre');
 
 		$con= new mysqli("localhost", "root", "", "sagrario");
-
 		if ($con->connect_errno){
     		echo "conexion erronea";
     		exit();
 		}
+
 		$clave1=substr($clave,0,1);
 		$solic='solic_local';
 		$base="bautismo";
+		if ($alta) {
+				$sql = "INSERT INTO bautismo (clave, solicitud, libro, librobis, foja, fojac, partidan, partidaab, fechasacr, ministro, nombre, paterno, materno, hijoa, padre, madre, padrino, madrina, fechanac, lugarnac, notamar) VALUES ('".$clave."', '".$solicitud."', '".$libro."', '".$librobis."', '".$foja."', '".$fojac."', '".$partidan."', '".$partidaab."', '".$fecsacr."', '".$ministro."', '".$nombre."', '".$paterno."', '".$materno."', '".$hijoa."', '".$padre."', '".$madre."', '".$padrino."', '".$madrina."', '".$fechanac."', '".$lugarnac."', '".$notamar."')";
 
-		$sql = "INSERT INTO bautismo (clave, solicitud, libro, librobis, foja, fojac, partidan, partidaab, fechasacr, ministro, nombre, paterno, materno, hijoa, padre, madre, padrino, madrina, fechanac, lugarnac, notamar) VALUES ('".$clave."', '".$solicitud."', '".$libro."', '".$librobis."', '".$foja."', '".$fojac."', '".$partidan."', '".$partidaab."', '".$fecsacr."', '".$ministro."', '".$nombre."', '".$paterno."', '".$materno."', '".$hijoa."', '".$padre."', '".$madre."', '".$padrino."', '".$madrina."', '".$fechanac."', '".$lugarnac."', '".$notamar."')";
+		}else{
+				$sql = "UPDATE bautismo SET solicitud=$solicitud, ministro=$ministro, nombre=$nombre, paterno=$paterno, materno=$materno, hijoa=$hijoa, padre=$padre, madre=$madre, padrino=$padrino, madrina=$madrina, fechanac=$fechanac, lugarnac=$lugarnac, notamar=$notamar
+		}
+		
 		$agrega = mysqli_query($con, $sql) or die( 'no agrega') ;
-
 
 		$sql = "SELECT * FROM $base WHERE clave = '".$clave."'";
 		$result = mysqli_query($con, $sql) or die(error_log('no encontro registro agregado'));
@@ -101,9 +105,9 @@ $notapie=$_POST['notapie'];
 		@ $txmesnac=$meses[$mesnac-1];
 		$anonac=substr($registro['fechanac'], 0, 4);
 		$txfechanac=$dianac." de ".$txmesnac." de ".$anonac;
-		
+
 	?>
-	
+
 	<form action="imp_bau.php" method="POST">
 	<table style='font-size:1.5em;'>
 	<tr>
@@ -112,10 +116,10 @@ $notapie=$_POST['notapie'];
 		<td width="225">Foja: <?php echo $foja."  ".$fojac; ?></td>
 
 		<td width="125">Acta: <?php echo $partidan."  ".$partidaab; ?>
-		
+
 	</tr>
 	</table>
-		<?php echo "<input type='hidden' name='solicitud' maxlength='7' width='5' size='5' value='".$solicitud."'>"."<input type='hidden' name='libro' maxlength='4' size='4' value='".$libro."'>" ."<input type='hidden' name='librobis'	maxlength='2' size='2' value='".$librobis."'>"."<input type='hidden' name='foja' maxlength='4' size='4' value='".$foja."'>"."<input type='hidden' name='fojac' maxlength='3' size='4' value='".$fojac."'><input type='hidden' name='partidan' maxlength='4' size='4' value='".$partidan."'><input type='hidden' name='partidaab' maxlength='1' size='1' value='".$partidaab."'>"
+		<?php echo "<input type='hidden' name='numSolicitud' maxlength='7' width='5' size='5' value='".$solicitud."'>"."<input type='hidden' name='libro' maxlength='4' size='4' value='".$libro."'>" ."<input type='hidden' name='librobis'	maxlength='2' size='2' value='".$librobis."'>"."<input type='hidden' name='foja' maxlength='4' size='4' value='".$foja."'>"."<input type='hidden' name='fojac' maxlength='3' size='4' value='".$fojac."'><input type='hidden' name='partidan' maxlength='4' size='4' value='".$partidan."'><input type='hidden' name='partidaab' maxlength='1' size='1' value='".$partidaab."'>"
 		?>
 
 
@@ -167,11 +171,15 @@ $notapie=$_POST['notapie'];
 	</form>
 
 	<SCRIPT LANGUAGE="JavaScript">
-	function enviab(pag){ 
-		document.form.action= pag 
-		document.form.submit() 
-	} 
-	</script>	
+	function enviab(pag){
+		document.form.action= pag
+		document.form.submit()
+	}
+	</script>
+  <footer>
+    Derechos Reservados - José Ignacio Virgilio Ruiz Arroyo
+  </footer>
+
 
 </body>
 </html>

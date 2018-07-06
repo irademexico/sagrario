@@ -15,25 +15,25 @@ exec("c:/xampp/htdocs/archivo/baja.bat");
     <meta name="keywords" content="sagrario, metropolitano" />
     <link href="css/normalize.css" rel="stylesheet" type="text/css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="img/favicon.png" rel="icon" type="image/png" />
+    <link href="img/favicon.ico" rel="icon" type="image/png" />
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-  <header style="font-size: 1em; height: 35px;">
-    <p style="font-size: 1.3em;height: 15px;">SAGRARIO METROPOLITANO</p>
+  <header >
+    SAGRARIO METROPOLITANO<br>
     Sistema Archivo
-  </header>
-  <section style="font-size: 1em">
-    <form name="form" method="POST" action='busca.php'>
-      <input  type="submit" name="home" onclick="enviab('archivo.php')" value="Inicio"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
 
-      Clave L.F.A.<input type="text" name="clave">
-      <input  type="submit" name="busca" onclick="enviab('busca.php')" value="Busca Acta"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-      <input  type="submit" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-      <input  type="submit" name="buscara" onclick="enviab('buscara.php')" value="Busqueda avanzada"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-      <input  type="submit" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib. bautismo"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
+    <form name="form" method="POST" action='busca.php'>
+      <input class="submitTop" type="button" name="inicio" onclick="enviab('index.php')" value="Inicio"   >
+      <input  class="submitTop"  type="button" name="archivo" onclick="enviab('archivo.php')" value="Archivo"  >
+
+      ||<input class="entradaMenu"  type="text" name="clave" placeholder="Clave L-F-A">
+      <input  class="submitTop"  type="submit" name="busca" onclick="enviab('busca.php')" value="Buscar"  >||
+      <input class="submitTop"   type="button" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  >
+      <input class="submitTop"   type="button" name="buscara" onclick="enviab('buscara.php')" value="Busqueda"   >
+      <input class="submitTop"   type="button" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib.bautismo"   >
     </form>
-  </section>
+  </header>
 <?php
 
 $con= new mysqli("localhost", "root", "", "sagrario");
@@ -71,10 +71,10 @@ while ($consulta= mysqli_fetch_array($listasol))
   $anofn=substr($consulta['fecNac'],0,4);
   $mesfn=substr($consulta['fecNac'],5,2);
   $diafn=substr($consulta['fecNac'],8,2);
-
+  $para=$consulta['para'];
   ++$num;
 
-  echo "<tr  style='font-size:1.2em; height:100px; color:#330066;' ><td  style='width: 7%;'>".$consulta['numSolicitud']."</td> <td  style='width: 22%;'>".$consulta['nombre']." ".$consulta['apPaterno']." ".$consulta['apMaterno']." ".$consulta['esposo']." <br> ".$consulta['esposa'].    "</td><td  style='width: 22%;'>".$consulta['padre']." <br> ".$consulta['madre']."</td> <td  style='width: 22%;'>".$consulta['padrino']." <br> ".$consulta['madrina']."</td> <td  style='width: 10%;'>".$diafn."/".$mesfn."/".$anofn."</td> <td style='width: 10%; '>".$solic."</td> <td style='width: 8%;'>".$consulta['fecaSolicitud']."</td> <td style='width: 7%;'><a href='nueva.php?numSolicitud=".$consulta['numSolicitud']."'><button>Continuar</button></a> </td>
+  echo "<tr  style='font-size:1.2em; height:100px; color:#330066;' ><td  style='width: 7%;'>".$consulta['numSolicitud']."-".$consulta['para']."</td> <td  style='width: 22%;'>".$consulta['nombre']." ".$consulta['apPaterno']." ".$consulta['apMaterno']." ".$consulta['esposo']." <br> ".$consulta['esposa'].    "</td><td  style='width: 22%;'>".$consulta['padre']." <br> ".$consulta['madre']."</td> <td  style='width: 22%;'>".$consulta['padrino']." <br> ".$consulta['madrina']."</td> <td  style='width: 10%;'>".$diafn."/".$mesfn."/".$anofn."</td> <td style='width: 10%; '>".$solic."</td> <td style='width: 8%;'>".$consulta['fecaSolicitud']."</td> <td style='width: 7%;'><a href='nueva.php?numSolicitud=".$consulta['numSolicitud']."'><button>Continuar</button></a> <p> <a href='noexiste.php?numSolicitud=".$consulta['numSolicitud']."'><button>NO ENCONTRO</button></a></td>
      </tr> ";
   //echo "<table border = '.1' style='color:#003333; width= 80%;' > ";
   //echo "<tr ><td style='width: 7%;'>Solicitud</td><td style='width: 17%;'>Nombre</td><td style='width: 17%;'> Padres </td><td style='width: 17%;'>Padrinos</td><td style='width: 10%;'>Fec.Nacimiento</td><td style='width: 110%;'>CLAVE-LFA</td> <td style='width: 7%;'></td> </tr>";
@@ -102,20 +102,20 @@ while ($consulta= mysqli_fetch_array($listasol))
     $patymat="'".$apat." ".$amat."'";
     $fnac="'".$consulta['fecNac']."'";
     //echo $nom."-".$snom."-".$apat."-".$amat."<br>";
-    $encontrado=mysqli_query($con,  "SELECT * FROM bautismo  WHERE  paterno = $apat AND materno = $amat AND nombre like $nom");
+    $encontrado=mysqli_query($con,  "SELECT * FROM bautismo  WHERE  paterno = $apat AND materno = $amat AND nombre like $nom ORDER BY madre ASC");
     $regs=mysqli_num_rows(mysqli_query($con, "SELECT * FROM bautismo  WHERE  paterno = $apat AND materno = $amat AND nombre like $nom" ));
     //echo $regs;
     if ($regs == 0){
 
       //PENDIENTES DE PROGRAMAR BUSQUEDAS AVANZADAS
 
-      $encontrado=mysqli_query($con,  "SELECT * FROM bautismo  WHERE  paterno = $apat AND materno = $amat AND nombre like $snom");
+      $encontrado=mysqli_query($con,  "SELECT * FROM bautismo  WHERE  paterno = $apat AND materno = $amat AND nombre like $snom ORDER BY madre ASC");
 
-       $regs=mysqli_num_rows(mysqli_query($con, "SELECT * FROM bautismo  WHERE  paterno = $apat AND materno = $amat AND nombre like $snom" ));
+       $regs=mysqli_num_rows(mysqli_query($con, "SELECT * FROM bautismo  WHERE  paterno = $apat AND materno = $amat AND nombre like $snom ORDER BY madre ASC" ));
 
        if ($regs== 0) {
-         $encontrado=mysqli_query($con,  "SELECT * FROM bautismo  WHERE  materno = $amat AND nombre like $nom");
-         $regs=mysqli_num_rows(mysqli_query($con, "SELECT * FROM bautismo  WHERE  paterno = $apat AND materno = $amat AND nombre like $snom" ));
+         $encontrado=mysqli_query($con,  "SELECT * FROM bautismo  WHERE  materno = $amat AND nombre like $nom ORDER BY madre ASC");
+         $regs=mysqli_num_rows(mysqli_query($con, "SELECT * FROM bautismo  WHERE  paterno = $apat AND materno = $amat AND nombre like $snom ORDER BY madre ASC" ));
          if ($regs==0) {
            echo "<tr ><td style='color:#ff0000;' colspan= '3'>"."NO SE ENCONTRO"."</td></tr> ";
          }
@@ -133,7 +133,8 @@ while ($consulta= mysqli_fetch_array($listasol))
           @$mesfn=substr($buscabase['fechaNac'],5,2);
           @$diafn=substr($buscabase['fechaNac'],8,2);
 
-          echo "<tr style='color:#330033;font-size: 1.2em; height:90px; background:#ccccee;'><td>Base Datos <br> BAUTISMOS<br>".$buscabase['solicitud'] ."</td> <td>".$buscabase['nombre']." ".$buscabase['paterno']." " . $buscabase['materno'] ."</td><td>".$buscabase['padre']."<br>".$buscabase['madre']."</td> <td>".$buscabase['padrino']."<br>".$buscabase['madrina']."</td> <td>". $diafn."-".$mesfn."-".$anofn."</td> <td colspan='2'>". $buscabase['clave']." </td> <td style='width: 7%;'><a href='encontrada.php?clave=".$buscabase['clave']."&ns=".$consulta['numSolicitud']."'><button>Encontrada</button></a> </td> </tr>";
+          echo "<tr style='color:#330033;font-size: 1.2em; height:90px; background:#ccccee;'><td>Base Datos <br> BAUTISMOS<br>".$buscabase['solicitud'] ."</td> <td>".$buscabase['nombre']." ".$buscabase['paterno']." " . $buscabase['materno'] ."</td><td>".$buscabase['padre']."<br>".$buscabase['madre']."</td> <td>".$buscabase['padrino']."<br>".$buscabase['madrina']."</td>";
+          echo "<td>".$diafn."-".$mesfn."-".$anofn."</td> <td colspan='2'>". $buscabase['clave']." </td> <td style='width: 7%;'><a href='encontrada.php?clave=".$buscabase['clave']."&ns=".$consulta['numSolicitud']."&para=".$consulta['para']."'><button>Encontrada</button></a> </td> </tr>";
 
           ++$idclave;
         }
@@ -151,21 +152,22 @@ while ($consulta= mysqli_fetch_array($listasol))
         $samat="'".trim(substr($consulta['apMaterno'],0,3))."'";
         $papa="'".trim($consulta['padre'])."'";
         $mama="'".trim($consulta['madre'])."'";
+        $padrino="'".trim($consulta['padrino'])."'";
 
 
-        $sql="SELECT * FROM confirma WHERE  paterno = $apat AND materno=$amat AND nombre LIKE $nom";
+        $sql="SELECT * FROM confirma WHERE  paterno = $apat AND materno=$amat AND nombre LIKE $nom ORDER BY madre ASC";
         $encontrado=mysqli_query($con, $sql);
          $regs=mysqli_num_rows(mysqli_query($con, $sql));
          if ($regs==0) {
-           $sql="SELECT * FROM confirma WHERE  paterno = $apat AND papa=$papa AND nombre LIKE $nom";
+           $sql="SELECT * FROM confirma WHERE  paterno = $apat AND papa=$papa AND nombre LIKE $nom ORDER BY madre ASC";
            $encontrado=mysqli_query($con, $sql);
             @$regs=mysqli_num_rows(mysqli_query($con, $sql));
             if ($regs==0) {
-              $sql="SELECT * FROM confirma WHERE  paterno like $sapat AND materno like $samat AND nombre LIKE $snom";
+              $sql="SELECT * FROM confirma WHERE  paterno like $sapat AND materno like $samat AND nombre LIKE $snom ORDER BY madre ASC";
               $encontrado=mysqli_query($con, $sql);
                $regs=mysqli_num_rows(mysqli_query($con, $sql));
                if ($regs==0) {
-                 $sql="SELECT * FROM confirma WHERE  padre LIKE $papa";
+                 $sql="SELECT * FROM confirma WHERE  madre = $mama ORDER BY madre ASC";
                  $encontrado=mysqli_query($con, $sql);
                   $regs=mysqli_num_rows(mysqli_query($con, $sql));
 
@@ -179,7 +181,7 @@ while ($consulta= mysqli_fetch_array($listasol))
       {
           $arrclave[$idclave]= $buscabase['clave'];
 
-          echo "<tr style='height:90px; color:#330033;font-size:1.2em;background-color:#ccccee'; ><td>".$buscabase['solicitud'] ."</td> <td>".$buscabase['nombre']." ".$buscabase['paterno']." " . $buscabase['materno'] ."</td><td>".$buscabase['padre']."<br>".$buscabase['madre']."</td> <td>".$buscabase['padrino']."</td> <td>". $buscabase['fechanac'] ."</td> <td colspan='2'>". $buscabase['clave']." </td> <td style='width: 7%;'><a href='encontrada.php?clave=".$buscabase['clave']."&ns=".$consulta['numSolicitud']."'><button>Encontrada</button></a> </td> </tr> ";
+          echo "<tr style='height:90px; color:#330033;font-size:1.2em;background-color:#ccccee'; ><td>".$buscabase['solicitud'] ."</td> <td>".$buscabase['nombre']." ".$buscabase['paterno']." " . $buscabase['materno'] ."</td><td>".$buscabase['padre']."<br>".$buscabase['madre']."</td> <td>".$buscabase['padrino']."</td> <td>".$buscabase['fechanac']."</td><td colspan='2'>".$buscabase['clave']."</td><td style='width: 7%;'><a href='encontrada.php?clave=".$buscabase['clave']."&ns=".$consulta['numSolicitud']."'><button>Encontrada</button></a> </td> </tr> ";
 
           ++$idclave;
       }

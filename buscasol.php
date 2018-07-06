@@ -40,10 +40,13 @@ $numSolicitud= $solic['solicitud'];
 	$sql="SELECT  * FROM $base WHERE numSolicitud = $numSolicitud";
 
 
-	$result = mysqli_query($con, $sql) or die(error_log('no encontro Solicitudes'));
+	$result = mysqli_query($con, $sql);
 	$regs=mysqli_num_rows(mysqli_query($con, $sql));
 
-	
+if ($regs==0) {
+	echo "no hay solicitudes";
+}else{
+
  ?>
 <!DOCTYPE html>
 <html>
@@ -54,37 +57,41 @@ $numSolicitud= $solic['solicitud'];
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Archivo</title>
+    <title>Solicitudes</title>
 
     <meta name="description" content="Archivo Sagrario Metropolitano" />
     <meta name="keywords" content="sagrario, metropolitano" />
 
     <link href="css/normalize.css" rel="stylesheet" type="text/css" />
-
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-    <link href="img/favicon.png" rel="icon" type="image/png" />
+    <link href="img/favicon.ico" rel="icon" type="image/png" />
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    
 </head>
 <body>  
 
-	<header >
-		<p style="font-size: 1.3em; height: 10px; padding-top: 0px; margin-top: 1px;">SAGRARIO METROPOLITANO</p>
-		Sistema Archivo
-		<form name="form" method="POST" action=''>
-			<input  type="submit" name="busca" onclick="enviab('buscasol.php')" value="Corregir"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="newsol" onclick="enviab('cap_solicitudes.php')" value="Nueva Solicitud"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="sube" onclick="enviab('envia.php')" value="Envia a USB"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-		</form>
-	</header>
+    <header >
+        SAGRARIO METROPOLITANO<br>
+        Sistema Archivo
 
-<article><h1>Corregir última solicitud</h1></article>
+        <form class="formTop" name="form" method="POST" action=''>
+            <input class="submitTop" type="submit" name="busca" onclick="enviab('buscasol.php')" value="Corregir"  >
+            <input  class="submitTop" type="submit" name="newsol" onclick="enviab('cap_solicitudes.php')" value="Nueva Solicitud" >
+            <input  class="submitTop" type="submit" name="sube" onclick="enviab('envia.php')" value="Envia a USB"  >
+            <input  class="submitTop" type="submit" name="feccon" onclick="enviab('fechascon.php')" value="Fechas de Confirmacion" >
+        </form>
+    </header>
+
+    <article class="titulo">Corregir última solicitud</article>
+
 
 <?php
 
-	echo "<table border = '1' style='color:#0000cc; width= 80%;'> \n"; 
-  	echo "<tr><td style='width: 7%;'>Solicitud</td><td style='width: 22%;'>Nombre</td><td style='width: 22%;'> Padres </td><td style='width: 22%;'>Padrinos</td><td style='width: 10%;'>Fec.Solicitud</td><td style='width: 10%; '>Solicitud de</td> </tr>"; 
+	//echo "<table border = '1' style='color:#0000cc; width= 80%;'> \n"; 
+  	//echo "<tr><td style='width: 7%;'>Solicitud</td><td style='width: 22%;'>Nombre</td><td style='width: 22%;'> Padres </td><td style='width: 22%;'>Padrinos</td><td style='width: 10%;'>Fec.Solicitud</td><td style='width: 10%; '>Solicitud de</td> </tr>"; 
 	$checked1="";
 	$checked2="";
 	$checked3="";
@@ -140,14 +147,13 @@ $numSolicitud= $solic['solicitud'];
         $checked9="checked";
         $para=0;
   }
-
+  $numSol= $consulta['numSolicitud'];
   $fechasol=$consulta['fecaSolicitud'];
   $anosol=substr($consulta['fecaSolicitud'],0,4);
   $messol=substr($consulta['fecaSolicitud'],5,2);
   $diasol=substr($consulta['fecaSolicitud'],8,2);
 
-  echo "<tr ><td  style='width: 7%;'>".$consulta['numSolicitud']."</td> <td  style='width: 22%;'>".$consulta['nombre']." ".$consulta['apPaterno']." ".$consulta['apMaterno']." ".$consulta['esposo']." - ".$consulta['esposa'].    "</td><td  style='width: 22%;'>".$consulta['padre']." - ".$consulta['madre']."</td> <td  style='width: 22%;'>".$consulta['padrino']." - ".$consulta['madrina']."</td> <td  style='width: 10%;'>".$diasol."/".$messol."/".$anosol."</td> <td style='width: 10%; '>".$solic."</td>  
-     </tr> ";
+  //echo "<tr ><td  style='width: 7%;'>".$consulta['numSolicitud']."</td> <td  style='width: 22%;'>".$consulta['nombre']." ".$consulta['apPaterno']." ".$consulta['apMaterno']." ".$consulta['esposo']." - ".$consulta['esposa'].    "</td><td  style='width: 22%;'>".$consulta['padre']." - ".$consulta['madre']."</td> <td  style='width: 22%;'>".$consulta['padrino']." - ".$consulta['madrina']."</td> <td  style='width: 10%;'>".$diasol."/".$messol."/".$anosol."</td> <td style='width: 10%; '>".$solic."</td>       </tr> ";
   $nombre=$consulta['nombre'];
   $paterno=$consulta['apPaterno'];
   $materno=$consulta['apMaterno'];
@@ -166,11 +172,15 @@ $numSolicitud= $solic['solicitud'];
 
 ?>
 
+<?php echo $consulta['numSolicitud'];?>
+
 <form action="imp_solicitud.php" method="POST">
 	<article>
+		<h4>Numero de solicitud: <?php echo $numSol;?></h4>
 		<table >
-			<caption style="height: 30px"><h3>Tipo de solicitud</h3></caption>
-			<tr width="640">
+			<tr><caption style="height: 30px"><h4>Tipo de solicitud</h4></caption>
+			</tr>
+				<tr width="640">
 				<td width="150">
 					<input type="hidden" name="busca" value="1">
 					<input type="radio" id="sol" name="solicitud" value="1" <?php echo $checked1;?> onchange="myVisible()"  />Bautismo<br>
@@ -213,13 +223,13 @@ $numSolicitud= $solic['solicitud'];
 			<tr width="600">
 				<td style="padding: 10 10 10 10;">
 			
-					Nombre:<input type="text" name="nombre"  width="25" value="<?php echo $nombre;?>">
+					Nombre:<input class="entradatx" type="text" name="nombre"  width="25" value="<?php echo $nombre;?>">
 				</td>
 				<td style="padding: 10 10 10 10;">
-					Apellido Paterno:<input type="text" id="input1" name="apPaterno" size="25" value="<?php echo $paterno;?>">
+					Apellido Paterno:<input  class="entradatx" type="text" id="input1" name="apPaterno" size="25" value="<?php echo $paterno;?>">
 				</td>
 				<td style="padding: 10 10 10 10;">
-					Apellido Materno:<input type="text" id="input3" name="apMaterno" size="25" value="<?php echo $materno;?>">
+					Apellido Materno:<input  class="entradatx" type="text" id="input3" name="apMaterno" size="25" value="<?php echo $materno;?>">
 				</td>
 			</tr>
 		</table>
@@ -228,10 +238,10 @@ $numSolicitud= $solic['solicitud'];
 		<table>
 			<tr>
 				<td style="padding: 10 10 10 10;">
-					Esposo:<input type="text" name="esposo" size="50" value="<?php echo $esposo;?>">
+					Esposo:<input  class="entradatx" type="text" name="esposo" size="50" value="<?php echo $esposo;?>">
 				</td>
 				<td style="padding: 10 10 10 10;">
-					Esposa:<input type="text" name="esposa" size="50" value="<?php echo $esposa;?>">
+					Esposa:<input  class="entradatx" type="text" name="esposa" size="50" value="<?php echo $esposa;?>">
 				</td>
 			</tr>
 		</table>
@@ -240,10 +250,10 @@ $numSolicitud= $solic['solicitud'];
 		<table>
 		<tr>
 			<td style="padding: 20 20 20 20;">
-				Padre:<input type="text" id="input2" name="padre" size="50" value="<?php echo $padre;?>">
+				Padre:<input  class="entradatx" type="text" id="input2" name="padre" size="50" value="<?php echo $padre;?>">
 			</td>
 			<td style="padding: 10 10 10 10;">
-				Madre:<input type="text" id="input4" name="madre" size="50" value="<?php echo $madre;?>">					
+				Madre:<input  class="entradatx" type="text" id="input4" name="madre" size="50" value="<?php echo $madre;?>">					
 			</td>
 		</tr>
 	</table>
@@ -252,7 +262,7 @@ $numSolicitud= $solic['solicitud'];
 		<table>
 		<tr>
 			<td style="padding: 10 10 10 10;">
-				Padrino:<input type="text" name="padrino" size="50" value="<?php echo $padrino;?>">
+				Padrino:<input  class="entradatx" type="text" name="padrino" size="50" value="<?php echo $padrino;?>">
 			</td>
 			<article>
 					
@@ -261,7 +271,7 @@ $numSolicitud= $solic['solicitud'];
 				<?php 
 			if ($sol=1) {
 				echo "
-				Madrina:<input type='text' name='madrina' size='50' value='".$madrina."'>";
+				Madrina:<input  class='entradatx' type='text' name='madrina' size='50' value='".$madrina."'>";
 			}
 			?>					
 			</td></article>
@@ -275,13 +285,13 @@ $numSolicitud= $solic['solicitud'];
 					
 				</td>
 				<td style="padding: 10 10 10 10;" >
-					<input type="date" name="fecSacr" value="<?php echo $fecSacr;?>">
+					<input  class='entrada' type="date" name="fecSacr" value="<?php echo $fecSacr;?>">
 				</td>
 
 				<td style="text-align: center;padding: 10 10 10 10;">
 					<div id="fNacimiento"  style="visibility: visible;">
 						<?php echo "
-						Nacimiento:<input type='date' name='fecNac' value='".$fechaNac."'>";
+						Nacimiento:<input  class='entrada' type='date' name='fecNac' value='".$fechaNac."'>";
 						?>
 					</div>
 				</td>
@@ -294,18 +304,18 @@ $numSolicitud= $solic['solicitud'];
 			<td width="150">
 
 						Original:
-						<input type='checkbox' id='original' name='original' value='1' checked="checked" onchange='verAprox()' >
+						<input  class='entrada'  type='checkbox' id='original' name='original' value='1' checked="checked" onchange='verAprox()' >
 						<br>
 						<div id='hasta'>Busqueda hasta:<br>
-						<input type='date'  name='fecAprox' value='<?php echo $fecAprox; ?>' /> </div>
+						<input  class='entrada' type='date'  name='fecAprox' value='<?php echo $fecAprox; ?>' /> </div>
 				
 
 			</td>
 			<td width="150" style="padding: 10 10 10 10;">
-				Fecha de Entrega: <?php echo "<input type='date'  name='fecEntrega' value='".$fecent."' />"; ?></td><TD>
+				Fecha de Entrega: <?php echo "<input  class='entrada'  type='date'  name='fecEntrega' value='".$fecent."' />"; ?></td><TD>
 				<input type="hidden" name="hoy" value="<?php echo $hoy;?>">
 				
-				<input type="submit" value="Imprimir" style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px">
+				<input class="submitDown" type="submit" value="Imprimir">
 			</td>
 
 		</tr>
@@ -393,3 +403,6 @@ $numSolicitud= $solic['solicitud'];
     </footer>
 </body>
 </html>
+<?php 
+}
+ ?>

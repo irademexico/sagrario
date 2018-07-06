@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 header("Content-type: text/html;charset=utf-8");
 header("mime-content-type: text/html;charset=utf-8");
 header("mime_content-type: text/html;charset=utf-8");
@@ -96,155 +96,76 @@ function PutLink($URL, $txt)
 
 $meses = array('ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
                'AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
-$solicitud = $_POST["solicitud"];
+//$solicitud = $_POST["solicitud"];
 
 $clave=$_POST['clave'];
-
-
-
+$numSolicitud=$_POST['numSolicitud'];
+$notaPie=trim($_POST['notapie']);
+@$altasol=$_POST['altasolcap'];
+@$alta=$_POST['alta'];
 
 $con= new mysqli("localhost", "root", "", "sagrario");
 if ($con->connect_errno){
     echo "conexion erronea";
     exit();
-}
+    }
 $clave="'".$clave."'";
 $base= "bautismo";
 $solic="solic_local";
-
-
-
-
+$notas="notas";
+if (!empty(trim($notaPie))) {
+  $sql="INSERT INTO $notas(numSolicitud, notaPie) VALUES ('$numSolicitud', '$notaPie')";
+  $agreganota= mysqli_query($con, $sql);
+}
 
     $ministro=$_POST['ministro'];
-    if (! empty($ministro)) {
-        $actualiza="UPDATE  $base SET ministro='$ministro' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $fechasacr=$_POST['fecsacr'];
-    if (! empty($fechasacr)) {
-        $actualiza="UPDATE  $base SET fechasacr='$fechasacr' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $fechanac=$_POST['fechanac'];
-    if (! empty($fechanac)) {
-        $actualiza="UPDATE  $base SET fechanac='$fechanac' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $foja=$_POST['foja'];
-    if (! empty($foja)) {
-        $actualiza="UPDATE  $base SET foja='$foja' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $fojac=$_POST['fojac'];
-    if (! empty($fojac)) {
-        $actualiza="UPDATE  $base SET fojac='$fojac' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $hijo=$_POST['hijo-a'];
-    if (! empty($hijo)) {
-        $actualiza="UPDATE  $base SET 'hijoa' ='$hijo' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $librobis=$_POST['librobis'];
-    if (! empty($librobis)) {
-        $actualiza="UPDATE  $base SET librobis='$librobis' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $libro=$_POST['libro'];
-    if (! empty($libro)) {
-        $actualiza="UPDATE  $base SET libro='$libro' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $lugarnac=$_POST['lugarnac'];
-    if (! empty($lugarnac)) {
-        $actualiza="UPDATE  $base SET lugarnac='$lugarnac' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
-//    $lugregciv=$_POST['lugregciv'];
     $madre = utf8_decode($_POST["madre"]);
-    if (! empty($madre)) {
-        $actualiza="UPDATE  $base SET madre='$madre' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $madrina = utf8_decode($_POST["madrina"]);
-    if (! empty($madrina)) {
-        $actualiza="UPDATE  $base SET madrina='$madrina' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $materno  = utf8_decode($_POST["materno"]);
-    if (! empty($materno)) {
-        $actualiza="UPDATE  $base SET materno='$materno' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
-    //$txnotamar=$_POST['txnotamar'];
-    //if (! empty($txnotamar)) {
-      //  $actualiza="UPDATE  $base SET txnotamar='$txnotamar' WHERE clave=$clave";
-        //$result = mysqli_query($con, $actualiza);
-   // }
     $nombre = utf8_decode($_POST["nombre"]);
-    if (! empty($nombre)) {
-        $actualiza="UPDATE  $base SET nombre='$nombre' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $notamar=$_POST['notamar'];
-    if ($notamar==0) {
-        $actualiza="UPDATE  $base SET notamar='$notamar' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
-
     $padre  = utf8_decode($_POST["padre"]);
-    if (! empty($padre)) {
-        $actualiza="UPDATE  $base SET padre='$padre' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $padrino = utf8_decode($_POST["padrino"]);
-    if (! empty($padrino)) {
-        $actualiza="UPDATE  $base SET padrino='$padrino' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $partidaab=$_POST['partidaab'];
-    if (! empty($partidaab)) {
-        $actualiza="UPDATE  $base SET partidaab='$partidaab' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $partidan=$_POST['partidan'];
-    if (! empty($partidan)) {
-        $actualiza="UPDATE  $base SET partidan='$partidan' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
     $paterno  = utf8_decode($_POST["paterno"]);
-    if (! empty($paterno)) {
-        $actualiza="UPDATE  $base SET paterno='$paterno' WHERE clave=$clave";
-        $result = mysqli_query($con, $actualiza);
-    }
-  //  $registroc=$_POST['registroc'];
+
+    if ($alta) {
+        
+        $sql="INSERT INTO $base(clave, ministro, fechasacr, fechanac, foja,  fojac, hijoa, librobis, libro, lugarnac, madre, madrina, materno, nombre, notamar, padre, padrino, partidaab, partidan, paterno, solicitud) VALUES($clave,'$ministro', '$fechasacr', '$fechanac', '$foja',  '$fojac', '$hijo', '$librobis', '$libro', '$lugarnac', '$madre', '$madrina', '$materno', '$nombre', '$notamar', '$padre', '$padrino', '$partidaab', '$partidan', '$paterno', '$numSolicitud')";
+        }
+    else {
+        $sql="UPDATE  $base SET ministro='$ministro', fechasacr='$fechasacr', fechanac='$fechanac', foja='$foja',  fojac='$fojac', hijoa ='$hijo', librobis='$librobis', libro='$libro', lugarnac='$lugarnac', madre='$madre', madrina='$madrina', materno='$materno', nombre='$nombre', notamar='$notamar', padre='$padre', padrino='$padrino', partidaab='$partidaab', partidan='$partidan', paterno='$paterno', solicitud='$numSolicitud' WHERE clave=$clave";
+        }
+        $result = mysqli_query($con, $sql);
 
     $notapie=utf8_decode($_POST['notapie']);
-if (empty($notapie)) {
-    $borde=0;
-}else{
-    $numSolicitud=$_POST['numSolicitud'];
-    $basenota='notas';
-    $sql="SELECT * FROM $basenota WHERE numSolicitud = $numSolicitud";
-    $result = mysqli_query($con, $sql);
-    $regs=mysqli_num_rows(mysqli_query($con, $sql));
-    if ($regs=0) {
-        $sql="INSERT INTO $basenota (numSolicitud, notapie) VALUES ('$numSolicitud', '$notapie')";
-    }else{
-        $sql="UPDATE $basenota SET notaPie='$notapie'";
-    }
+        if (empty(trim($notapie))) {
+            $borde=0;
+        }else{
+            $basenota='notas';
 
-    $result = mysqli_query($con, $sql);
-
-}
+            $sql="INSERT INTO $basenota (numSolicitud, notapie) VALUES ('$numSolicitud', '$notapie')";
+            $result = mysqli_query($con, $sql);
+     
+            $sql="UPDATE $basenota SET notaPie='$notapie' WHERE numSolicitud = $numSolicitud";
+            $result = mysqli_query($con, $sql);
+        }
 
 
 $sql = "SELECT * FROM $base WHERE clave = $clave";
 $result = mysqli_query($con, $sql);
 $reg_bau=mysqli_fetch_assoc($result);
 $regs=mysqli_num_rows(mysqli_query($con, $sql));
-
+// $reg_bau['nombre'];
     $diabau=substr($reg_bau['fechasacr'], 8, 2);
     if (substr($diabau,0,1)=='0') {
         $diabau=substr($diabau,1,1);
@@ -288,7 +209,12 @@ $fojac=$reg_bau['fojac'];
 $partidan=$reg_bau['partidan'];
 $partidaab=$reg_bau['partidaab'];
 $notapie=utf8_encode(trim($notapie)) ;
-
+$fecsac=$reg_bau['fechasacr'];
+if ($altasol) {
+ 
+$newsol="INSERT INTO solic_local(numSolicitud, solicitud, nombre, apPaterno, apMaterno, padre, madre, fecSacr, status) VALUES('$numSolicitud', '1', '$nombre', '$paterno', '$materno', '$padre', '$madre', '$fecsac', '4') ";
+mysqli_query($con, $newsol);
+}
 if (empty($notapie)){
     $borde=0;
 }else{
@@ -299,21 +225,21 @@ if (empty($notapie)){
 if ($notamar==0) {
     $nm1="                         N I N G U N A";
 }else{
-    $nm1=$txnotamar; //pendiente de programación
+    $nm1=utf8_decode($txnotamar); //pendiente de programación
 }
 
 $txlib=$libro." ".$librobis;
-if ($foja == $fojac) {
+if (trim($foja) == trim($fojac)) {
     $txfoja=$foja;
 }else{
     $txfoja=$foja." ".$fojac;
 }
 
+
 $txpart=$partidan." ".$partidaab;
 
 $nomaps=$nombre." ".$paterno." ".$materno;
-
-
+//*
 $pdf = new PDF();
 // Primera página
 $pdf->AddPage();
@@ -402,5 +328,5 @@ $pdf->MultiCell(70,5, utf8_decode($notapie),$borde);
 
 $pdf->Output();
 
-
-?>"
+//*/
+?>

@@ -13,29 +13,31 @@
     <meta name="keywords" content="sagrario, metropolitano" />
 
     <link href="css/normalize.css" rel="stylesheet" type="text/css" />
-
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-    <link href="img/favicon.png" rel="icon" type="image/png" />
+    <link href="img/favicon.ico" rel="icon" type="image/png" />
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+
 </head>
 <body>  
-    <header style="font-size: 1em; height: 35px;">
-        <p style="font-size: 1.3em;height: 15px;">SAGRARIO METROPOLITANO</p>
+    <header >
+        SAGRARIO METROPOLITANO<br>
         Sistema Archivo
-    
-   
-   
-        <form name="form" method="POST" action=''>
-            <input  type="submit" name="newsol" onclick="enviab('cap_solicitudes.php')" value="Nueva Solicitud"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
+
+        <form class="formTop" name="form" method="POST" action=''>
+            <input class="submitTop" type="submit" name="busca" onclick="enviab('buscasol.php')" value="Corregir"  >
+            <input  class="submitTop" type="submit" name="newsol" onclick="enviab('cap_solicitudes.php')" value="Nueva Solicitud" >
+            <input  class="submitTop" type="submit" name="sube" onclick="enviab('envia.php')" value="Envia a USB"  >
+            <input  class="submitTop" type="submit" name="feccon" onclick="enviab('fechascon.php')" value="Fechas de Confirmacion" >
         </form>
+    </header>
 
-    
-</header>
-<article><h1>Solicitudes enviadas al Archivo</h1></article>
+    <article class="titulo">Solicitudes Enviadas a USB</article>
 
-
+<section>
 <?php 
 
 $con= new mysqli("localhost", "root", "", "sagrario");
@@ -75,13 +77,17 @@ else {
 }
 
 exec("envia.bat");
-
-$sql="UPDATE $base set status = 2 WHERE status= 1;";
-$actualiza=mysqli_query($con, $sql);
+$baselocal='solic_local';
+$sql="INSERT INTO $baselocal SELECT * FROM $base";
+//$sql="UPDATE $base set status = 2 WHERE status= 1;";
+$actualiza=mysqli_query($con, $sql) ;
+$sql="truncate TABLE solicitudes";
+$eliminasol=mysqli_query($con, $sql);
 mysqli_close($con);
 
 
 ?>
+</section>
     <SCRIPT LANGUAGE="JavaScript">
     function enviab(pag){ 
         document.form.action= pag 

@@ -14,21 +14,6 @@ $padrino=$_POST['padrino'];
 $madrina=$_POST['madrina'];
 $fechabau=$_POST['fechabau'];
 $fechanac=$_POST['fechanac'];
-echo $numSol;
-echo "<br>".$solicitud ;
-echo "<br>".$libro ;
-echo "<br>".$ln ;
-echo "<br>".$acta ;
-echo "<br>".$ab ;
-echo "<br>".$nombre ;
-echo "<br>".$paterno ;
-echo "<br>".$materno ;
-echo "<br>".$padre ;
-echo "<br>".$madre ;
-echo "<br>".$padrino ;
-echo "<br>".$madrina ;
-echo "<br>".$fechabau ;
-echo "<br>".$fechanac ;
 
 switch ($solicitud) {
 	case 1:
@@ -43,23 +28,97 @@ switch ($solicitud) {
 	default:
 		?>
 		<script type="text/javascript">
-			alert("Seleccione la base de busqueda - Bautismo, Confirmacion, Matrimonio")
+			alert("S'eleccione' la base de busqueda - Bautismo, Confirmacion, Matrimonio")
 			window.history.back();
 		</script>
 		<?php
-		break;
+	}
+
+
+if ($numSol) {
+	$sql="SELECT * FROM $base WHERE solicitud = '$numSol'";
 }
+
+if ($libro) {
+
+	$sql="SELECT * FROM $base WHERE libro = '$libro'";
+	if ($ln) {
+
+		$sql="SELECT * FROM $base WHERE libro = '$libro' AND librobis = '$ln'";
+		if ($acta) {
+			$sql="SELECT * FROM $base WHERE libro = '$libro' AND librobis = '$ln' AND partidan = '$acta'";
+			if ($ab) {
+				$sql="SELECT * FROM $base WHERE libro = '$libro' AND librobis = '$ln' AND partidan = '$acta' AND partidaab = '$ab'";
+			}
+		}
+	}
+
+	else{
+		if ($acta) {
+			$sql="SELECT * FROM $base WHERE libro = '$libro' AND partidan = '$acta'";
+			if ($ab) {
+				$sql="SELECT * FROM $base WHERE libro = '$libro' AND  partidan = '$acta' AND partidaab = '$ab'";
+	}}}
+
+}
+
+if ($nombre) {
+	$nombre="'%".$nombre."%'";
+	$sql="SELECT * FROM $base WHERE nombre LIKE $nombre";
+	if ($paterno) {
+		$paterno="'%".$paterno."%'";
+		$sql="SELECT * FROM $base WHERE nombre LIKE $nombre AND paterno LIKE $paterno";
+		if ($materno) {
+			$materno="'%".$materno."%'";
+			$sql="SELECT * FROM $base WHERE nombre LIKE $nombre AND paterno LIKE $paterno AND materno LIKE $materno";
+		}
+	}
+	else{
+		if ($materno) {
+			$materno="'%".$materno."%'";
+			$sql="SELECT * FROM $base WHERE nombre LIKE $nombre AND materno LIKE $materno";
+		}
+	}
+}
+if ($padre) {
+	$padre="'%".$padre."%'";
+	if ($nombre) {
+		$nombre="'%".$nombre."%'";
+		
+		$sql="SELECT * FROM $base WHERE nombre LIKE $nombre AND padre LIKE $padre";
+	}else{
+		$sql="SELECT * FROM $base WHERE padre LIKE $padre";
+	}
+}
+if ($madre) {
+	$madre="'%".$madre."%'";
+	if ($nombre) {
+		$nombre="'%".$nombre."%'";
+		
+		$sql="SELECT * FROM $base WHERE nombre LIKE $nombre AND madre LIKE $madre";
+	}else{
+		$sql="SELECT * FROM $base WHERE madre LIKE $madre";
+	}
+}
+
+echo $sql;
 
 
 $con= new mysqli("localhost", "root", "", "sagrario");
-$sql="SELECT * FROM $base WHERE solicitud = $numSol";
 
  $encontrado=mysqli_query($con, $sql);
     
     while ($buscabase= mysqli_fetch_array($encontrado))
         {
           
-          echo "<tr ><td> Solicitud: ".$buscabase['solicitud'] ."</td> <td> Nombre: ".$buscabase['nombre']." ".$buscabase['paterno']." " . $buscabase['materno'] ."</td></tr><tr><td> Padres: ".$buscabase['padre']."<br>".$buscabase['madre']."</td> <td>".$buscabase['padrino']."<br> Padrinos: ".$buscabase['madrina']."</td> <td> Fecha de Nacimiento: ". $buscabase['fechanac'] ."</td></tr><tr> <td> Clave: ". $buscabase['clave']." </td> </tr>";
+          echo "<table border='1'><tr >
+          			<td> Solicitud: ".$buscabase['solicitud'] ."</td> 
+          			<td> Nombre: ".utf8_encode($buscabase['nombre'])." ".utf8_encode($buscabase['paterno'])." " .utf8_encode($buscabase['materno'])."</td>
+          			<td> Padres: ".utf8_encode($buscabase['padre'])."<br>".utf8_encode($buscabase['madre'])."</td> 
+          			<td> Padrinos: ".utf8_encode($buscabase['padrino'])."<br> ".utf8_encode($buscabase['madrina'])."</td> 
+          			<td> Fecha de Nacimiento: ". $buscabase['fechanac'] ."</td>
+          			<td> Clave: ". $buscabase['clave']." </td> 
+      			</tr></table>";
           }
 
  ?>

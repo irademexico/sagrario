@@ -1,8 +1,6 @@
 <?php 
     $txSolicitud=$_POST['numSol'];
-    
-
-
+  
     $nombre = $_POST["nombre"];
     $apPaterno  = $_POST["apPaterno"];
     $apMaterno  = $_POST["apMaterno"];

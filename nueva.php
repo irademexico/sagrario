@@ -29,6 +29,7 @@
 	$padre=$consulta['padre'];
 	$padrino=$consulta['padrino'];
 	$solicitud=$consulta['solicitud'];
+	$para=$consulta['para'];
 ?>
 
 <!DOCTYPE html>
@@ -43,25 +44,25 @@
     <meta name="keywords" content="sagrario, metropolitano" />
     <link href="css/normalize.css" rel="stylesheet" type="text/css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="img/favicon.png" rel="icon" type="image/png" />
+    <link href="img/favicon.ico" rel="icon" type="image/png" />
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-  <header style="font-size: 1em; height: 35px;">
-    <p style="font-size: 1.3em;height: 15px;">SAGRARIO METROPOLITANO</p>
-    Sistema Archivo
-  </header>
-  <section style="font-size: 1em">
-    <form name="form" method="POST" action='busca.php'>
-      <input  type="submit" name="home" onclick="enviab('archivo.php')" value="Inicio"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-      
-      Clave L.F.A.<input type="text" name="clave">
-      <input  type="submit" name="busca" onclick="enviab('busca.php')" value="Busca Acta"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-      <input  type="submit" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-      <input  type="submit" name="buscara" onclick="enviab('buscara.php')" value="Busqueda avanzada"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-      <input  type="submit" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib. bautismo"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-    </form>
-  </section>
+	<header >
+		SAGRARIO METROPOLITANO<br>
+		Sistema Archivo
+	
+		<form name="form" method="POST" action='busca.php'>
+			<input class="submitTop" type="button" name="inicio" onclick="enviab('index.php')" value="Inicio"   >
+			<input  class="submitTop"  type="button" name="archivo" onclick="enviab('archivo.php')" value="Archivo"  >
+			
+			||<input class="entradaMenu"  type="text" name="clave" placeholder="Clave L-F-A">
+			<input  class="submitTop"  type="submit" name="busca" onclick="enviab('busca.php')" value="Buscar"  >||
+			<input class="submitTop"   type="button" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  >
+			<input class="submitTop"   type="button" name="buscara" onclick="enviab('buscara.php')" value="Busqueda"   >
+			<input class="submitTop"   type="button" name="caplibbau" onclick="enviab('cvelibrobau.php')" value="Captura Lib.bautismo"   >
+		</form>
+	</header>
 	<?php
 		$meses = array('ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
 
@@ -94,19 +95,30 @@
 		<td><strong><?php echo $numSolicitud;?></strong></td>
 		<input type="hidden" name="solicitud" value="<?php echo $solicitud?>">
 		<input type="hidden" name="numSolicitud" value="<?php echo $numSolicitud;?>">
+		<input type="hidden" name="para" value="<?php echo $para;?>">
 		<td> - Libro: </td>
 		<td><input type="number" name="libro" maxlength="4" size="4"></td>
-		<td><input type="text" name="librobis"	maxlength="2" size="4" placeholder="L/N/LN/E"></td>
+		<?php if ($solicitud==1): ?>
+				<td><input type="text" name="librobis"	maxlength="2" size="4" placeholder="L/N/LN/E"></td>
+		<?php endif ?>
 		<td>Foja:</td>
 		<td><input type="number" name="foja" maxlength="4" size="4"></td>
-		<td><input type="text" name="fojac" maxlength="3" size="4" placeholder="FTE/VTA"></td>
+		<?php if ($solicitud==2): ?>
+				
+				<td><input type="text" name="fojac" maxlength="3" size="4" placeholder="FTE/VTA"></td>
 
+		<?php endif ?>
+		
 		<td>Acta: </td>
 		<td><input type='number' name='partidan' maxlength='4' size='4'></td>
 		<td><input type='text' name='partidaab' maxlength='1' size='1' placeholder='A/B'></td>
-		<?php echo "<td><input type='number' name='registro' maxlength='2' size='2' placeholder='reg.'></td>";
+
+		<?php if ($solicitud==2): ?>
+				<td><input type='number' name='registro' maxlength='2' size='2' placeholder='reg.'></td>	
+		<?php endif ?>
+
 		
-		?>
+		
 		<td><input type="submit" name="" value="Continuar"></td>
 	</tr>
 

@@ -1,6 +1,17 @@
-<?php 
+<?php
 	date_default_timezone_set('America/Mexico_City');
+
+	$dia=date('N');
+	$diasem=$dia;
+	if ($diasem>4) {
+		$de=3;
+	}else{
+		$de=2;
+	}
+	$fecent=mktime(0,0,0, date("m"), date("d")+$de, date("Y"));
+	$fecent=date("Y-m-d",$fecent);
 	$hoy=date('Y-m-d');
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -17,54 +28,39 @@
     <meta name="keywords" content="sagrario, metropolitano" />
 
     <link href="css/normalize.css" rel="stylesheet" type="text/css" />
-
-	<script src="http://code.jquery.com/jquery-latest.js"></script>    
-
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="img/favicon.png" rel="icon" type="image/png" />
+
+    <link href="img/favicon.ico" rel="icon" type="image/png" />
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <!-- <link href="css/bootstrap.css" rel="stylesheet" type="text/css">-->
+    
 </head>
 
 <body>
 
-<?php 
-
-$dia=date('N');
-$diasem=$dia;
-if ($diasem>4) {
-	$de=3;
-}else{
-	$de=2;
-}
-$fecent=mktime(0,0,0, date("m"), date("d")+$de, date("Y"));
-$fecent=date("Y-m-d",$fecent);
-$hoy=date('Y-m-d');
- ?>
 
 	<header >
-		<p style="font-size: 1.3em; height: 10px; padding-top: 0px; margin-top: 1px;">SAGRARIO METROPOLITANO</p>
+		SAGRARIO METROPOLITANO<br>
 		Sistema Archivo
-		<form name="form" method="POST" action=''>
-			
-            		
-			<input  type="submit" name="busca" onclick="enviab('buscasol.php')" value="Corregir"  style="background-color: #a4d279; width: 10%; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="newsol" onclick="enviab('cap_solicitudes.php')" value="Nueva Solicitud"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="sube" onclick="enviab('envia.php')" value="Envia a USB"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
-			<input  type="submit" name="feccon" onclick="enviab('fechascon.php')" value="Fechas de Confirmacion"  style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px" >
+
+		<form class="formTop" name="form" method="POST" action=''>
+			<input class="submitTop" type="submit" name="busca" onclick="enviab('buscasol.php')" value="Corregir"  >
+			<input  class="submitTop" type="submit" name="newsol" onclick="enviab('cap_solicitudes.php')" value="Nueva Solicitud" >
+			<input  class="submitTop" type="submit" name="sube" onclick="enviab('envia.php')" value="Envia a USB"  >
+			<input  class="submitTop" type="submit" name="feccon" onclick="enviab('fechascon.php')" value="Fechas de Confirmacion" >
 		</form>
 	</header>
-	
-<article><h1>Nueva Solicitud</h1></article>
+
+	<article class="titulo">Nueva Solicitud</article>
 
 
 <section>
-<form action="imp_solicitud.php" method="POST">
+<form action="imp_solicitud.php" method="POST" target="_blank">
 	<input type="hidden" name="busca" value="0">
 	<article>
 		<table >
-			<caption style="height: 30px"><h3>Tipo de solicitud</h3></caption>
+			<caption>Tipo de solicitud</caption>
 			<tr width="640">
 				<td width="150">
 					<input type="hidden" name="busca" value="0">
@@ -80,10 +76,14 @@ $hoy=date('Y-m-d');
 					<input type="radio" name="urgente" value="1" checked />Normal<br>
 					<input type="radio" name="urgente" value="2" />Urgente<br>
 				</td>
-				<td width="190">
-					<article id="fMatri" style="height: 40px">
-					<input type="radio" name="para" value="1" checked />para Matrimonio<br>
-					<input type="radio" name="para" value="2" />para Otros
+				<td width="400" >
+					<article id="fMatri" style="height: 60px">
+						
+					<input type="radio" name="para" value="1" checked />para Matrimonio
+					<input type="radio" name="para" value="2" />para Comunión
+					<input type="radio" name="para" value="3" />para Confirmación
+					<input type="radio" name="para" value="4" />para Padrino-Madrina
+					<input type="radio" name="para" value="5" />para otros
 					</article>
 				</td>
 
@@ -94,14 +94,14 @@ $hoy=date('Y-m-d');
 		<table>
 			<tr width="600">
 				<td style="padding: 10 10 10 10;">
-			
-					Nombre:<input type="text" name="nombre" width="25">
+
+					Nombre:<input class="entradatx" type="text" name="nombre" size="35">
 				</td>
 				<td style="padding: 10 10 10 10;">
-					Apellido Paterno:<input type="text" id="input1" name="apPaterno" size="25">
+					Apellido Paterno:<input class="entradatx" type="text" id="input1" name="apPaterno" size="35">
 				</td>
 				<td style="padding: 10 10 10 10;">
-					Apellido Materno:<input type="text" id="input3" name="apMaterno" size="25">
+					Apellido Materno:<input class="entradatx" type="text" id="input3" name="apMaterno" size="35">
 				</td>
 			</tr>
 		</table>
@@ -110,10 +110,10 @@ $hoy=date('Y-m-d');
 		<table>
 			<tr>
 				<td style="padding: 10 10 10 10;">
-					Esposo:<input type="text" name="esposo" size="50">
+					Esposo:<input class="entradatx" type="text" name="esposo" size="50">
 				</td>
 				<td style="padding: 10 10 10 10;">
-					Esposa:<input type="text" name="esposa" size="50">
+					Esposa:<input class="entradatx" type="text" name="esposa" size="50">
 				</td>
 			</tr>
 		</table>
@@ -122,10 +122,10 @@ $hoy=date('Y-m-d');
 		<table>
 		<tr>
 			<td style="padding: 20 20 20 20;">
-				Padre:<input type="text" id="input2" name="padre" size="50" >
+				Padre:<input class="entradatx" type="text" id="input2" name="padre" size="50" >
 			</td>
 			<td style="padding: 10 10 10 10;">
-				Madre:<input type="text" id="input4" name="madre" size="50">					
+				Madre:<input class="entradatx" type="text" id="input4" name="madre" size="50">
 			</td>
 		</tr>
 	</table>
@@ -134,11 +134,11 @@ $hoy=date('Y-m-d');
 		<table>
 		<tr>
 			<td style="padding: 10 10 10 10;">
-				Padrino:<input type="text" name="padrino" size="50">
+				Padrino:<input class="entradatx" type="text" name="padrino" size="50">
 			</td>
 			<article>
 			<td id="fMadrina" style="padding: 10 10 10 10;">
-				Madrina:<input type="text" name="madrina" size="50">					
+				Madrina:<input class="entradatx" type="text" name="madrina" size="50">
 			</td></article>
 		</tr>
 	</table>
@@ -152,11 +152,11 @@ $hoy=date('Y-m-d');
 					<div id="fMatrimonio"  style="visibility: hidden;">Matrimonio:</div>
 				</td>
 				<td style="padding: 10 10 10 10;" >
-					<input type="date" name="fecSacr">
+					<input id="fecha_fin" class="entrada" type="date" name="fecSacr">
 				</td>
 				<td style="text-align: center;padding: 10 10 10 10;">
 					<div id="fNacimiento"  style="visibility: visible;">
-						Nacimiento:<input type="date" name="fecNac">
+						Nacimiento:<input id="fecha_inicio" class="entrada" type="date" name="fecNac" onchange="validar()">
 					</div>
 				</td>
 			</tr>
@@ -170,23 +170,23 @@ $hoy=date('Y-m-d');
 				<div id="hasta" style="visibility: hidden;">Busqueda hasta:<br><input type="date" name="fecAprox"></div>
 			</td>
 			<td width="150" style="padding: 10 10 10 10;">
-				Fecha de Entrega: <?php echo "<input type='date'  name='fecEntrega' value='".$fecent."' />"; ?></td><TD>
-				<input type="submit" value="continuar" style="background-color: #a4d279; width: auto; height: 30px; color: #1c541d; font-size: .8em;  border-style: groove; border-radius: 10px 10px 10px 10px">
+				Fecha de Entrega: <?php echo "<input class='entrada'  type='date'  name='fecEntrega' value='".$fecent."' />"; ?></td><TD>
+				<input class="submitDown" type="submit" value="Continuar">
 			</td>
 
 		</tr>
 	</table>
-		
+
 	</article>
 	<p align="center">
 	<tr>
-		
+
 	</tr>
 	</p>
 </form>
 </section>
 	<script type="text/javascript">
-			
+
 			function myVisible(){
 				document.getElementById("fBautismo").style.visibility = 'visible';
 				document.getElementById("fNombre").style.visibility = 'visible';
@@ -232,10 +232,11 @@ $hoy=date('Y-m-d');
 			}
 	</script>
 	<SCRIPT LANGUAGE="JavaScript">
-	function enviab(pag){ 
-		document.form.action= pag 
-		document.form.submit() 
-	} 
+	function enviab(pag){
+		document.form.action= pag
+		document.form.submit()
+	}
+
 	    $(document).ready(function () {
         $("#input1").keyup(function () {
             var value = $(this).val();
@@ -249,10 +250,17 @@ $hoy=date('Y-m-d');
             $("#input4").val(value);
         });
     });
-	</script>
+	
+	    function validar() {
+            var inicio = document.getElementById('fecha_inicio').value; 
+            var finalq  = document.getElementById('fecha_fin').value;
+            inicio= new Date(inicio);
+            finalq= new Date(finalq);
+            if(inicio>finalq)
+            alert('La fecha de inicio puede ser mayor que la fecha fin');
+            }
 
-
-
+    </script>
 	<footer>
 		Derechos Reservados - José Ignacio Virgilio Ruiz Arroyo
 	</footer>
