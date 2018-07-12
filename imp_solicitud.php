@@ -267,7 +267,17 @@ if ($para==1) {
     //$txdatosMat = $datosMat;
 }
 else{
-    $txPara = " se solicita para otros  - ";
+    if ($para==2) {
+        $txPara=" para Comunión";
+    }
+    elseif ($para==3) {
+        $txPara=" para Confirmación";
+    }
+    elseif ($para==4) {
+        $txPara=" para Padrino o Madrina";
+    }
+    else
+    $txPara = " para otros";
     $txdatosMat = "";
 }
 if (empty($vacia)) {
@@ -361,7 +371,7 @@ $pdf->Write(5, utf8_decode('y de 12:00  a 2:00 pm - sábados.'));
 $pdf->SetFont('','','');
 $pdf->ln(10);
 $pdf->SetFont('','');
-$pdf->Write(5, $txPara);
+$pdf->Write(5, utf8_decode($txPara));
 $pdf->SetX(120);
 $pdf->SetFont('', '', '12');
 $pdf->Write(5, 'EN DIAS HABILES');
@@ -492,6 +502,7 @@ $pdf->SetFont('','',10);
 $pdf->Write(5, 'Solicitud de BAUTISMO  ');
 $pdf->Write(5, $txSimple);
 $pdf->Write(5, $txUrgente);
+$pdf->Write(5, utf8_decode($txPara));
 
 $pdf->SetX(140);
 $pdf->Write(5, 'No.:  ');

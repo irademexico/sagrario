@@ -79,21 +79,45 @@
 		//$sql = "SELECT * FROM $base WHERE clave = '".$clave."'";
 		$sql = "SELECT * FROM $base WHERE libro=$libro AND librobis='$librobis' AND foja=$foja AND fojac='$fojac' AND partidan=$partidan AND partidaab='$partidaab'";
 
-		$result = mysqli_query($con, $sql ) or die(error_log('no consulto clave'));
+		$result = mysqli_query($con, $sql );
 		$regs=mysqli_num_rows(mysqli_query($con, $sql));
 
 		$registro=mysqli_fetch_assoc($result);
-
+			$checkmt="";
+			$checkcf="";
+			$checkcm="";
+			$checkor="";
 		if ($regs>0) {
 			$alta=False;
-
+			$notamar=0;
+			$txnotamar="";
 			$base='notas_marg';
 			$sql = "SELECT * FROM $base WHERE clave='".$clave."'";
 			$result = mysqli_query($con, $sql );
 			@$regs=mysqli_num_rows(mysqli_query($con, $sql));
-			@$notaMarginal=mysqli_fetch_assoc($result);
+			$checkmt="";
+			$checkcf="";
+			$checkcm="";
+			$checkor="";
 			if ($regs>0) {
-					$txnotamar=utf8_encode($notaMarginal['txnotamar']);
+				while ($notaMarginal=mysqli_fetch_assoc($result)) {
+					$txnotamar=$txnotamar.utf8_encode($notaMarginal['txnotamar'])." ; ";
+
+					switch ($notaMarginal['nota']) {
+						case '1':
+							$checkmt="checked";
+							break;
+						case '2':
+							$checkcf="checked";
+							break;
+						case '3':
+							$checkcm="checked";
+							break;
+						case '4':
+							$checkor="checked";
+							break;
+					}
+				}	
 			}
 
 			$base='notas';
@@ -167,8 +191,17 @@
 		<td><input class="entradatx" type="text" name="lugarnac" placeholder='entidad-colonia...' size="50" value="<?php echo utf8_encode($registro['lugarnac']);?>"></td></tr>
 </table>
 <table><tr>
+	<td>Nota Marginal</td>
+	<td>
+		<input type='checkbox' name='notam' <?php echo $checkmt; ?> >Matrimonio<br>
+		<input type='checkbox' name='notam' <?php echo $checkcf; ?> >Confirmación<br>
+		<input type='checkbox' name='notam' <?php echo $checkcm; ?> >Comunión<br>
+		<input type='checkbox' name='notam' <?php echo $checkor; ?> >Orden<br>";
+		
+		
+	</td>
 <?php
-		echo "<td>Nota marginal:</td><td><input class='entradatx' type='text' name='notamar' size='1' value='".$registro['notamar']."' maxlenght='1'></td><td><textarea class='entradaarea' rows='4' cols='50' name='txnotamar'>".$txnotamar."</textarea></td>"."	<td>Nota al pie:</td><td><textarea class='entradaarea' rows='4' cols='45' name='notapie'>".$txnotapie."</textarea></td></tr></table>";
+		echo "<td><textarea class='entradaarea' rows='4' cols='50' name='txnotamar'>".$txnotamar."</textarea></td>"."	<td>Nota al pie:</td><td><textarea class='entradaarea' rows='4' cols='45' name='notapie'>".$txnotapie."</textarea></td></tr></table>";
 		echo "<input type='hidden' name='clave' value='".$clave."' visible='hidden'>";
 		echo "<input type='hidden' name='alta' value='".$alta."' visible='hidden'>";
 		echo "<input type='hidden' name='altasolcap' value='".$altasol."' visible='hidden'>";

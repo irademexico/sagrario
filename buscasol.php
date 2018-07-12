@@ -174,7 +174,7 @@ if ($regs==0) {
 
 <?php echo $consulta['numSolicitud'];?>
 
-<form action="imp_solicitud.php" method="POST">
+<form action="imp_solicitud.php" method="POST" target="_blank">
 	<article>
 		<h4>Numero de solicitud: <?php echo $numSol;?></h4>
 		<table >
@@ -234,7 +234,7 @@ if ($regs==0) {
 			</tr>
 		</table>
 	</article>
-	<article id="fEsposos" style="white-space: wrap; overflow: hidden;visibility: hidden;">
+	<article id="fEsposos" style="white-space: wrap; overflow: hidden;visibility: visible;">
 		<table>
 			<tr>
 				<td style="padding: 10 10 10 10;">

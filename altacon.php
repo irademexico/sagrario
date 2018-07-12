@@ -54,7 +54,7 @@
 			<input class="submitTop" type="button" name="inicio" onclick="enviab('index.php')" value="Inicio"   >
 			<input  class="submitTop"  type="button" name="archivo" onclick="enviab('archivo.php')" value="Archivo"  >
 
-			||<input class="entradaMenu"  type="text" name="clave" placeholder="Clave L-F-A">
+			||<input class="entradaMenu"  type="text" name="clave" placeholder="L-F-A">
 			<input  class="submitTop"  type="submit" name="busca" onclick="enviab('busca.php')" value="Buscar"  >||
 			<input class="submitTop"   type="button" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  >
 			<input class="submitTop"   type="button" name="buscara" onclick="enviab('buscara.php')" value="Busqueda"   >

@@ -112,7 +112,7 @@ if (empty($reg)||$reg==0) {
 	</section>
 	<?php
 
-		$meses = array('enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre');
+		//$meses = array('enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre');
 
 		$con= new mysqli("localhost", "root", "", "sagrario");
 		if ($con->connect_errno){
@@ -121,7 +121,10 @@ if (empty($reg)||$reg==0) {
 		}
 
 		$solic='solic_local';
-
+			$checkmt="";
+			$checkcf="";
+			$checkcm="";
+			$checkor="";
 
 		if ($regbase==0){
 			$sql = "SELECT * FROM $solic WHERE numSolicitud = $numSolicitud ";
@@ -356,14 +359,35 @@ if (empty($reg)||$reg==0) {
 <?php
 	if ($para==1) {
 		$notaPie="Valida para tramitar matrimonio en la parroquia de";
-	}else{
+		$txpara="";
+	}
+	elseif ($para==2) {
+		$notaPie="";
+		$txpara="Comunión";
+	}
+	elseif ($para==3) {
+		$notaPie="";
+		$txpara="Confirmación";
+	}elseif ($para==4) {
+		$notaPie="";
+		$txpara="Padrino-Madrina";
+	}
+	else
+	{
+		$txpara="otros";
 		$notaPie="";
 	}
 
 
 	if ($solicitud==1) {
 		echo "<td>Nota marginal:</td><td></td><td><input  class='entradatx' type='text' name='notamar' size='1'  maxlenght='1'></td><td><textarea class='entradaarea' rows='4' cols='50' name='txnotamar'></textarea></td>"."	<td>Nota al pie:</td><td><textarea class='entradaarea' rows='4' cols='50' name='notapie'>".$notaPie."</textarea></td></tr></table>";
+		echo "<tr>
+		<td></td><td></td><td></td><td></td><td>Para: ".$txpara."</td>
+	</tr>";
 		echo "<input type='hidden' name='clave' value='".$clave."' visible='hidden'>";
+
+
+
 	}elseif ($solicitud==2) {
 
 		?>
@@ -381,14 +405,16 @@ if (empty($reg)||$reg==0) {
 		<td>datos:</td>
 		<td><input class='entradatx' type="text" name="librobau" size="20" placeholder="l.a. de bau"></td>
 	</tr>
+	
 </table>
 
 <?php
 	}
 }
 ?>
-
-		<input type='submit' name='' value='Imprimir'>
+		<input type="hidden" name="para" value="<?php echo "$para"; ?>">
+		<p>
+		<input type='submit' name='' value='Imprimir'></p>
 	</form>
 
 	<SCRIPT LANGUAGE="JavaScript">

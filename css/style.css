@@ -21,8 +21,9 @@ header{
 	background: #e0d0a3;
 	top: 0;
 	position: fixed;
-	height: 90px;
-	font-size: 1em;
+	height: 70px;
+	font-size: 1.7em;
+	padding-top: 3px;
 }
 aside{
 	background: #859933;
@@ -30,6 +31,7 @@ aside{
 
 form{
 	padding-top: 5px;
+	font-size: 1em;
 }
 footer{
 
@@ -39,12 +41,21 @@ footer{
     height: 20px;
     background: #dfcf9f;
 }
+table caption{
+	height: 30px; 
+	font-size: 1.3em; 
+	font-weight: bold;
+}
 .entrada{
 	font-size: 1.3em;
 	text-align: right;
 }
 .entradatx{
 	font-size: 1.3em;
+	text-align: left;
+}
+.entradaMenu{
+	font-size: .7em;
 	text-align: left;
 }
 .headMain{
@@ -86,6 +97,36 @@ footer{
 
 .confirma2{
 	margin-top: 300px;
+}
+.formTop{
+	font-size: .8em;
+	height: 75px;
+}
+.titulo{
+	font-size: 1.3em;
+	text-align: center;
+	font-weight: bold;
+	margin-top: 5px;
+}
+.submitTop{
+	background-color: #a4d279; 
+	min-width: 10%; 
+	height: 30px; 
+	color: #1c541d; 
+	font-size: .8em;  
+	border-style: groove; 
+	border-radius: 10px 10px 10px 10px;
+	margin:  2px 2px 2px 2px;
+}
+.submitDown{
+	background-color: #a4d279; 
+	min-width: 10%; 
+	height: 30px; 
+	color: #1c541d; 
+	font-size: 1.2em;  
+	border-style: groove; 
+	border-radius: 10px 10px 10px 10px;
+	margin:  2px 2px 2px 2px;
 }
 .arriba{
 	position: absolute;

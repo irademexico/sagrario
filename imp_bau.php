@@ -101,6 +101,9 @@ $meses = array('ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO',
 $clave=$_POST['clave'];
 $numSolicitud=$_POST['numSolicitud'];
 $notaPie=trim($_POST['notapie']);
+$notam=$_POST['notam'];
+$txnotamar=$_POST['txnotamar'];
+
 @$altasol=$_POST['altasolcap'];
 @$alta=$_POST['alta'];
 
@@ -113,8 +116,19 @@ $clave="'".$clave."'";
 $base= "bautismo";
 $solic="solic_local";
 $notas="notas";
+$notasm="notas_marg";
+
+echo "notam:".$notam;
+if ($notam>0) {
+    $sql="INSERT INTO $notasm(solicitud, txnotamar, clave, nota) VALUES ('$numSolicitud', '$txnotamar', $clave, '$notam') ";
+    $result= mysqli_query($con, $sql);
+    $sql="UPDATE $notasm SET txnotamar='$txnotamar', nota='$notam'  WHERE solicitud = '$numSolicitud' ";
+    $result= mysqli_query($con, $sql);
+}
+
+
 if (!empty(trim($notaPie))) {
-  $sql="INSERT INTO $notas(numSolicitud, notaPie) VALUES ('$numSolicitud', '$notaPie')";
+  $sql="INSERT INTO $notas(numSolicitud, notaPie, clave) VALUES ('$numSolicitud', '$notaPie', $clave)";
   $agreganota= mysqli_query($con, $sql);
 }
 
@@ -131,12 +145,13 @@ if (!empty(trim($notaPie))) {
     $madrina = utf8_decode($_POST["madrina"]);
     $materno  = utf8_decode($_POST["materno"]);
     $nombre = utf8_decode($_POST["nombre"]);
-    $notamar=$_POST['notamar'];
+    $notamar=$_POST['notam'];
     $padre  = utf8_decode($_POST["padre"]);
     $padrino = utf8_decode($_POST["padrino"]);
     $partidaab=$_POST['partidaab'];
     $partidan=$_POST['partidan'];
     $paterno  = utf8_decode($_POST["paterno"]);
+@    $para = $_POST['para'];
 
     if ($alta) {
         
@@ -150,15 +165,15 @@ if (!empty(trim($notaPie))) {
     $notapie=utf8_decode($_POST['notapie']);
         if (empty(trim($notapie))) {
             $borde=0;
-        }else{
+            $notapie=$para;
+        }
             $basenota='notas';
 
-            $sql="INSERT INTO $basenota (numSolicitud, notapie) VALUES ('$numSolicitud', '$notapie')";
+            $sql="INSERT INTO $basenota (numSolicitud, notapie, clave) VALUES ('$numSolicitud', '$notapie', $clave)";
             $result = mysqli_query($con, $sql);
      
-            $sql="UPDATE $basenota SET notaPie='$notapie' WHERE numSolicitud = $numSolicitud";
+            $sql="UPDATE $basenota SET notaPie='$notapie', clave=$clave  WHERE numSolicitud = $numSolicitud";
             $result = mysqli_query($con, $sql);
-        }
 
 
 $sql = "SELECT * FROM $base WHERE clave = $clave";
@@ -215,8 +230,9 @@ if ($altasol) {
 $newsol="INSERT INTO solic_local(numSolicitud, solicitud, nombre, apPaterno, apMaterno, padre, madre, fecSacr, status) VALUES('$numSolicitud', '1', '$nombre', '$paterno', '$materno', '$padre', '$madre', '$fecsac', '4') ";
 mysqli_query($con, $newsol);
 }
-if (empty($notapie)){
+if (empty($notapie) || is_numeric($notapie)){
     $borde=0;
+    $notapie="";
 }else{
     $borde=1;
 }
@@ -239,7 +255,8 @@ if (trim($foja) == trim($fojac)) {
 $txpart=$partidan." ".$partidaab;
 
 $nomaps=$nombre." ".$paterno." ".$materno;
-//*
+
+/*
 $pdf = new PDF();
 // Primera página
 $pdf->AddPage();

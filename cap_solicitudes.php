@@ -59,10 +59,10 @@
 <form action="imp_solicitud.php" method="POST" target="_blank">
 	<input type="hidden" name="busca" value="0">
 	<article>
-		<table >
+		<table width="960" align="">
 			<caption>Tipo de solicitud</caption>
-			<tr width="640">
-				<td width="150">
+			<tr width="960">
+				<td width="150" >
 					<input type="hidden" name="busca" value="0">
 					<input type="radio" id="sol" name="solicitud" value="1" checked onchange="myVisible()"  />Bautismo<br>
 					<input type="radio" id="sol" name="solicitud" value="2"  onchange="myVisible2()" />Confirmacion<br>
@@ -76,12 +76,12 @@
 					<input type="radio" name="urgente" value="1" checked />Normal<br>
 					<input type="radio" name="urgente" value="2" />Urgente<br>
 				</td>
-				<td width="400" >
+				<td width="500" >
 					<article id="fMatri" style="height: 60px">
 						
-					<input type="radio" name="para" value="1" checked />para Matrimonio
-					<input type="radio" name="para" value="2" />para Comunión
-					<input type="radio" name="para" value="3" />para Confirmación
+					<input type="radio" name="para" value="1" checked />p/ Matrimonio
+					<input type="radio" name="para" value="2" />p/ Comunión
+					<input type="radio" name="para" value="3" />p/ Confirmación<br>
 					<input type="radio" name="para" value="4" />para Padrino-Madrina
 					<input type="radio" name="para" value="5" />para otros
 					</article>

@@ -75,14 +75,17 @@ echo "<tr><td colspan='6'>.</td></tr></table>";
 else {
     echo "fallo consulta";
 }
+if ($filas==0) {
+    
+    exec("envia.bat");
+    $baselocal='solic_local';
+    $sql="INSERT INTO $baselocal SELECT * FROM $base";
+    //$sql="UPDATE $base set status = 2 WHERE status= 1;";
+    $actualiza=mysqli_query($con, $sql) ;
+    $sql="truncate TABLE solicitudes";
+    $eliminasol=mysqli_query($con, $sql);
+}
 
-exec("envia.bat");
-$baselocal='solic_local';
-$sql="INSERT INTO $baselocal SELECT * FROM $base";
-//$sql="UPDATE $base set status = 2 WHERE status= 1;";
-$actualiza=mysqli_query($con, $sql) ;
-$sql="truncate TABLE solicitudes";
-$eliminasol=mysqli_query($con, $sql);
 mysqli_close($con);
 
 

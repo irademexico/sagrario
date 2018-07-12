@@ -56,7 +56,7 @@
 			<input class="submitTop" type="button" name="inicio" onclick="enviab('index.php')" value="Inicio"   >
 			<input  class="submitTop"  type="button" name="archivo" onclick="enviab('archivo.php')" value="Archivo"  >
 			
-			||<input class="entradaMenu"  type="text" name="clave" placeholder="Clave L-F-A">
+			||<input class="entradaMenu"  type="text" name="clave" placeholder="L-F-A">
 			<input  class="submitTop"  type="submit" name="busca" onclick="enviab('busca.php')" value="Buscar"  >||
 			<input class="submitTop"   type="button" name="solic_local" onclick="enviab('solic_local.php')" value="Solicitudes"  >
 			<input class="submitTop"   type="button" name="buscara" onclick="enviab('buscara.php')" value="Busqueda"   >
@@ -144,6 +144,13 @@
 		<tr><td></td>
 			<td>  <?php echo "<input type='hidden' name='padre' maxlength='50' size='40' value='".$padre."' >" ?></td>
 			<td>  <?php echo "<input type='hidden' name='madre' maxlength='50' size='40' value='".$madre."' >" ?></td>
+		</tr>
+		</table>
+<table>
+	<table style="background: #ccff66;">
+		<tr><td></td>
+			<td>  <?php echo "<input type='hidden' name='esposo' maxlength='50' size='40' value='".$esposo."' >" ?></td>
+			<td>  <?php echo "<input type='hidden' name='esposa' maxlength='50' size='40' value='".$esposa."' >" ?></td>
 		</tr>
 		</table>
 <table>
